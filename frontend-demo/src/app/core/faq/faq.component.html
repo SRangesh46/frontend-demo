@@ -1,0 +1,31 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="content-panel">
+    <div class="row">
+        <div class="col-12">
+            <div class="map">
+                <div class="map_element" style="cursor: pointer;" [routerLink]="''">Home</div>
+                <div class="map_element">FAQ's</div>
+            </div>
+        </div>
+    </div>
+    <div class="row page_heading select_input">
+        <div class="col-12">
+            <div class="">Frequently asked questions</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="faq_div Faq" *ngFor="let questions of questionAndAnswerList" >
+                <div class="faq_heading">{{questions.faqCat}}</div>
+                <accordion *ngFor="let item of questions.faqDetails">
+                    <accordion-group
+                        heading="{{item.sequence}} {{item.question}}" >
+                       {{item.answer}}
+                    </accordion-group>
+                </accordion>
+            </div>
+        </div>
+    </div>
+</div>

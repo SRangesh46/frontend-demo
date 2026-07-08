@@ -1,0 +1,90 @@
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    padding: 0 60px; /* Ensure some padding so arrows don't overlap */
+    margin-left: 105px;
+    margin-right: 105px;
+  }
+  
+  .scroll-btn-left,
+  .scroll-btn-right {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border-radius: 50%;
+  }
+  
+  .scroll-btn-left {
+    left: 10px;
+  }
+  
+  .scroll-btn-right {
+    right: 10px;
+  }
+  
+  .scroll-btn-left:hover,
+  .scroll-btn-right:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+.city_images_pos{
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .city_pop_cust .modal_title {
+    font-family: Poppins_Bold !important;
+    font-size: 18px !important;
+  }
+  .city_name{
+    text-align: center;
+    font-size: 14px;
+    white-space: normal;
+    word-wrap: break-word;
+    /* word-break: unset; */
+    width: 187px;
+  }
+  .img_city_name {
+    text-align: center;
+  }
+   
+  .img_citys_name{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .city_line{
+    border-bottom:1px solid #ebebeb;
+    margin-top: 40px;
+    margin-bottom: 25px;
+  }
+  .city_ip .themeinput .form-control {
+    padding-left: 35px;
+    padding-top: 5px;
+    width: 240px;
+    box-shadow: none;
+    margin-bottom: 20px;
+    border: 0 !important;
+    border-bottom: 2px solid #ebebeb !important;
+  }
+
+  .city_ip{
+    display: flex;
+    justify-content: end;
+  }
+
+ 
+
+ 

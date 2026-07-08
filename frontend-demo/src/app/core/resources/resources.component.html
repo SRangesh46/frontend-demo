@@ -1,0 +1,172 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="content-panel">
+  <div class="row">
+      <div class="col-12">
+          <div class="map">
+              <div class="map_element" style="cursor: pointer;" [routerLink]="''">Home</div>
+              <div class="map_element">Resources</div>
+          </div>
+      </div>
+  </div>
+  <div class="row page_heading select_input">
+      <div class="col-12">
+          <div class="">Resources</div>
+      </div>
+  </div>
+  <div class="row mt-3">
+      <div class="col-12">
+          <div class="sources_div" *ngFor="let pdf of pdfList">
+              <div class="sources_heading" >{{pdf.letter}}</div>
+              <div class="sources_document">
+                  <div class="sources_document_div" *ngFor="let title of pdf.pdfDetails"  style="cursor: pointer;" >
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt=""  (click)="open_pdf(pdf_popup, title)">
+                      </div>
+                      <div class="pdf_download_link"  (click)="open_pdf(pdf_popup, title)">{{title.subTitle}}</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt="" (click)="downloadPdf(title)"></div>
+                  </div>
+              </div>
+          </div>
+          <!-- <div class="sources_div">
+              <div class="sources_heading">Quick Reference</div>
+              <div class="sources_document">
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Complete User Guide</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>PDF Reports</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+              </div>
+          </div>
+          <div class="sources_div">
+              <div class="sources_heading">Complete User Guide</div>
+              <div class="sources_document">
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Getting Started</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Accessing the Directory of Services</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Metropolis Setup Guide</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Metropolis Setup Guide</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Metropolis Setup Guide</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+                  <div  class="sources_document_div">
+                      <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="">
+                      </div>
+                      <div>Metropolis Setup Guide</div>
+                      <div><img src="/assets/images/dos/Download blue.png" alt=""></div>
+                  </div>
+              </div>
+          </div> -->
+      </div>
+  </div>
+</div>
+
+
+<ng-template #pdf_popup>
+    <div class="modal-header" style="justify-content: end;"><span class="close_pdf" (click)="modalRef.hide(); closePdf()">X</span></div>    
+    <div class="modal-body">
+      <!-- ============ content Start============== -->
+      <div class="row">
+        <div class="col-12">
+            <!-- <object data="https://www.africau.edu/images/default/sample.pdf" style="width: 100%; height: calc(100vh - 128px);"></object> -->
+            <!-- <pdf-viewer src="https://www.africau.edu/images/default/sample.pdf" [render-text]="true" [original-size]="false" style="width: 100%; height: calc(100vh - 128px);"></pdf-viewer> -->
+          <!-- <iframe src="https://www.africau.edu/images/default/sample.pdf" style="height: calc(100vh - 128px);width: 100%;"></iframe> -->
+          <!-- <embed src="https://www.africau.edu/images/default/sample.pdf"  style="height: calc(100vh - 128px);width: 100%;"> -->
+            <!-- <ngx-extended-pdf-viewer [src]="src"
+            [useBrowserLocale]="true"
+            [textLayer]="true"
+            [showHandToolButton]="true"
+            [showPresentationModeButton]="true"
+            [showDownloadButton]="false"
+            [enablePrint] =	"true"
+            [contextMenuAllowed] = "true"
+            [showSidebarButton] = "true"
+            [showBookmarkButton] ="false"
+            [showOpenFileButton] = "false"
+            [showPropertiesButton] = "false"
+            [showPropertiesButton] = "false"
+            [showSpreadButton] = "false"
+          ></ngx-extended-pdf-viewer> -->
+          <div class="pdf_icon_cont">
+            <div class="pagin_pdf">
+              <button class="pdf-icons" tooltip="Previous" (click)="prevPage()"><img src="/assets/images/dos/previous.png"
+                  alt=""></button>
+                  <div class="pagenopdf">{{page}} / {{totalPages}}</div>
+              <button class="pdf-icons" tooltip="Next" (click)="nextPage()"><img src="/assets/images/dos/nextarrow.png"
+                  alt=""></button>
+            </div>
+            <div class="pagin_pdfbut">
+              <button class="pdf-icons" tooltip="Zoom in" (click)="zoomin()"><img src="/assets/images/dos/zoomin.png"
+                alt=""></button>
+            <button class="pdf-icons" tooltip="Zoom out" (click)="zoomout()"><img src="/assets/images/dos/zoomout.png"
+                alt=""></button>
+            <button class="pdf-icons" tooltip="Rotate Clockwise" (click)="rotateClockwise()"><img
+                src="/assets/images/dos/right.png" alt=""></button>
+            <button class="pdf-icons" tooltip="Rotate AntiClockwise" (click)="rotateCounterClockwise()"><img
+                src="/assets/images/dos/left.png" alt=""></button>
+            </div>
+  
+  
+          </div>
+          <pdf-viewer #pdfViewer [src]="src"  [rotation]="rotation" [original-size]="false" [show-all]="true"
+            [fit-to-page]="false" [page]="page" [zoom]="zoom" [zoom-scale]="'page-width'" [stick-to-page]="false"
+            [render-text]="true" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+            style="height: 600px;" (after-load-complete)="afterLoadComplete($event)"></pdf-viewer>
+    
+        </div>
+      </div>
+   
+    </div>
+  </ng-template>
+
+  
+<!-- <div id="outerContainer">
+    <div class="pdf-container">
+      <pdf-viewer
+        [src]="src"
+        [rotation]="0"
+        [original-size]="false"
+        [show-all]="true"
+        [fit-to-page]="false"
+        [zoom]="zoom"
+        [zoom-scale]="'page-width'"
+        [stick-to-page]="false"
+        [render-text]="true"
+        [external-link-target]="'blank'"
+        [autoresize]="true"
+        [show-borders]="false"
+        style="width: 100%; height: 600px;"
+      ></pdf-viewer>
+      <button (click)="zoomin()">zoomin</button>
+      <button (click)="zoomout()">zoomout</button>
+    </div>
+  </div> -->

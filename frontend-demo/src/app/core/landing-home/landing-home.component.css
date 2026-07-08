@@ -1,0 +1,87 @@
+.notification_panel{
+    box-shadow: 0px 3px 10px #64646429;
+    background: #fff;
+    padding: 15px 10px 10px 10px;
+    border-radius: 10px;
+    /* max-height: 365px; */
+    /* height: calc(100vh - 500px); */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 0;
+}
+.new_test,.test_name,.date ,.time ,.location,.pincode{
+    font-size: 12px;
+}
+.date ,.time ,.location,.pincode{
+ text-align: end;
+}
+.Notification{
+    color: #138D6E;
+    font-size: 12px;
+    font-weight: bold;
+}
+.bell_icon{
+    height: 20px;
+    width: 20px;
+}
+.test_border{
+    border-bottom: 1px solid #CBCBCB;
+}
+.new_test{
+color: #0DB7E1;
+}
+.test_discontinued
+{
+color: #F81F1F;
+}
+.test_updated{
+color: #00984A;
+}
+.test_deleted{
+    color:#940101
+}
+.pincode{
+    margin-left:5px;
+}
+.nabl_yes{
+    color:#940101
+}
+.nabl_no{
+    color: #00984A;
+
+}
+/* new */
+
+.notification_panel td{
+    border: none;
+    padding: 0;
+}
+
+.notification_panel_heading{
+    z-index: 2;
+}
+
+.p-datatable .p-datatable-wrapper {
+    overflow-x: hidden !important;
+}
+
+.viewMore{
+    font-size: 1em;    
+    text-align: end;
+    cursor: pointer;
+    /* color: #6d6d6d; */
+    color: #00977b;
+    text-decoration: underline;
+}
+
+.viewMore:hover{
+    text-decoration: none;
+    /* color: #000; */
+}
+
+.noData{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 38px);
+}

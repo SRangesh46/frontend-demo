@@ -1,0 +1,1066 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="key_bac">
+                    <div class="input-chip">
+                        <div class="themeinput" style="position: relative;">
+                            <!-- <input type="text" class="form-control" id="chipset" style="padding-right: 40px;"
+                                autocomplete="off" [disabled]="isSubmitting" (input)="searchedValue($event)"
+                                (keydown.enter)="getTestOnEnter($event)" maxlength="200" [(ngModel)]="search_content"
+                                (keypress)="keypress($event)"> -->
+                                <!-- [(ngModel)]="selectSearchKeyWord ? selectSearchKeyWord :search_content" -->
+
+                            <p-autoComplete [(ngModel)]="selectedItem" [suggestions]="suggestions"
+                           
+                                (input)="searchedValue($event)" (keydown.enter)="getTestOnEnter($event)"
+                                (keypress)="keypress($event)" (completeMethod)="search($event)"
+                                (onSelect)="onSelectGlobal($event)" />
+                            <span class="search_icon_dos" style="cursor:pointer" (click)="getTestOnEnter($event)"><img
+                                    style="cursor:pointer" src="/assets/images/dos/Search grey.png" alt=""></span>
+
+                            <!-- <div class="card flex justify-content-center"> -->
+
+                            <!-- </div> -->
+                        </div>
+                        <!-- <a
+                                            class="remove-chip" (click)="remove(i)">X</a> -->
+                        <!-- <div class="label"><label class="popuar_search">Popular search :</label>
+                            <div>
+                                <ul id="list" *ngFor="let item of popularSearchtItems;let i as index">
+                                    <li *ngIf="item.keyword != ''">
+                                        <span class="chip-name" style="cursor: pointer;"
+                                            (click)="selectedPopularKey(item)">{{item.keyword}}</span>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="keyboard">
+                        <div class="alphabets" (click)="alphabets(lette,$event)" *ngFor="let lette of letter">{{lette}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3 search-content" *ngIf="!search_active">
+            <div class="col-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                <owl-carousel-o [options]="customOptions">
+                    <ng-container>
+                        <ng-template class="banner" carouselSlide *ngFor="let data of bannnersList">
+                            <img class="banner_img" src="{{data.catalogBannerUrl}}" />
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                <div class="notification_panel" id="scroll">
+                    <div class="notification_panel_heading mb-2" style="display:flex;justify-content:space-between">
+                        <div class="Notification">Notification</div>
+                        <div class="bell_icon"><img src="/assets/images/dos/Notification.png" alt="" srcset=""
+                                style="height:14px;width:14px"></div>
+                    </div>
+                    <!-- <div class="noData pt-2" *ngIf="notificationList.length == 0">No notifications available!</div> -->
+                    <div class="noData pt-2">
+                        <!-- <img src="https://is-onedos.s3.ap-south-1.amazonaws.com/B2C_Banner_Image/Notification1.png"
+                            alt="" srcset="" style="height:50%;width:50%"> -->
+                        <img src="https://dos2-dev.s3.ap-south-1.amazonaws.com/B2C_Banner_Image/Notification1.png"
+                            alt="" srcset="" style="height:50%;width:50%">
+                    </div>
+
+
+
+                    <!-- <p-table class="prime_ng_notify" [value]="notificationList.slice(first, first + rows)" [first]="first" [rows]="10">
+                        <ng-template pTemplate="body" let-notification>
+                            <tr>
+                                <td>
+                                    <div class="mt-2">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
+                                                <div class="test_name">
+                                                    <span class="new_test" [ngClass]="{
+                                                        'new_test': ['New Package', 'New Test', 'New Group', 'New Subgroup'].includes(notification.Type),
+                                                        'test_deleted': ['Test Deactivated', 'Package Deactivated', 'Group Deactivated', 'Subgroup Deactivated'].includes(notification.Type),
+                                                        'test_updated': ['Update Test', 'Update Package', 'Update Group', 'Update Subgroup'].includes(notification.Type)
+                                                    }">{{ notification.Type }}</span> - <span class="test_name">{{ notification.testCode}}</span> - <span class="test_name">{{ notification.testName}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-5">
+                                                <div class="date">{{ notification.date }}</div>
+                                                <div class="location">{{ locationName }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="test_border mt-2"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="prime_ng_notify_pag">
+                        <div class="viewMore pt-3" (click)="truePaginator()" *ngIf="!showPaginator && notificationList.length > rows ">View More....</div>
+                        <p-paginator *ngIf="notificationList.length > rows && showPaginator" [totalRecords]="notificationList.length" [rows]="rows" (onPageChange)="onPageChange($event)"></p-paginator>
+                    </div>      -->
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-3 search-content " *ngIf="search_active">
+            <form [formGroup]="testForm">
+                <div class="col-12">
+                    <div class="row select_input">
+                        <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="DepartmentName" [options]="departmentMasterList"
+                                    [showClear]="true" formControlName="department" (onChange)="getTestData()"
+                                    optionLabel="DepartmentName" [filter]="true" filterBy="DepartmentName"
+                                    placeholder="Department" [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="Category" [options]="categoryMasterList" optionLabel="Category"
+                                    formControlName="category" (onChange)="getTestData()" [filter]="true"
+                                    filterBy="Category" placeholder="Category" [showClear]="true"
+                                    [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="Method" [options]="methodMasterList" optionLabel="Method"
+                                    formControlName="method" (onChange)="getTestData()" [filter]="true"
+                                    filterBy="Method" placeholder="Method" [showClear]="true" [resetFilterOnHide]="true"
+                                    [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="sampleType" [options]="sampleTypeDetailsMaster"
+                                    [showClear]="true" formControlName="sampleType" (onChange)="getTestData()"
+                                    optionLabel="sampleType" [filter]="true" filterBy="sampleType"
+                                    placeholder="Sample Type" [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="id" [options]="nablList" [showClear]="true"
+                                    formControlName="nabl" (onChange)="getTestData()" optionLabel="nabl" [filter]="true"
+                                    filterBy="nabl" placeholder="NABL" [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="ReportedOn" [options]="reportedOnMasterList"
+                                    optionLabel="ReportedOn" formControlName="reportOn" (onChange)="getTestData()"
+                                    [filter]="true" filterBy="ReportedOn" placeholder="Reported on" [showClear]="true"
+                                    [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="value" [options]="testStatusMaster" optionLabel="name"
+                                    formControlName="status" (onChange)="getTestData()" filterBy="name"
+                                    placeholder="Test Status" [showClear]="true" [resetFilterOnHide]="true"
+                                    [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="DiseaseName" [options]="diseaseMasterList"
+                                    optionLabel="DiseaseName" formControlName="disease" (onChange)="getTestData()"
+                                    [filter]="true" filterBy="DiseaseName" placeholder="Diseases" [showClear]="true"
+                                    [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg col-xl col-xxl mt-3">
+                            <div class="themeinput">
+                                <p-dropdown optionValue="SpecialityName" [options]="specialityMasterList"
+                                    formControlName="speciality" (onChange)="getTestData()" optionLabel="SpecialityName"
+                                    [filter]="true" filterBy="SpecialityName" placeholder="Speciality"
+                                    [showClear]="true" [resetFilterOnHide]="true" [lazy]="true">
+                                </p-dropdown>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+            </form>
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <div class="search_content">Search results :<span class="results ml-2">
+                                {{selectSearchKeyWord ? selectSearchKeyWord :searchedWords}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <div class="total_download">
+                            <div class="pdf_download">
+                                <img (click)="getCataloguePdfView()" class="pdf_img"
+                                    src="/assets/images/dos/pdf_img.png" alt="">
+                                <!-- <img class="pdf_img_download" src="/assets/images/dos/Download blue.png" alt=""> -->
+                            </div>
+                            <div class="total_count">
+                                <span>{{testDetails.length}}</span><span class="ml-2">Item</span>
+                            </div>
+                            <!-- <div class="download_icon_search">
+                                <img src="/assets/images/dos/Download icon.png" alt="" style="cursor: pointer;"
+                                    (click)="exportData()">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="landing_table">
+                <div class="col-12 mobilepad_table">
+                    <div class="receive-tab mobile2column">
+                        <p-table class="prime_ng_table" [value]="testDetails" [rowExpandMode]="'single'"
+                            dataKey="testCode" [sortOrder]="-1" [paginator]="true" [rows]="100" [scrollable]="true"
+                            scrollHeight="550px" styleClass="p-datatable-sm" [resizableColumns]="true"
+                            [tableStyle]="{ 'min-width': '75rem' }">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pFrozenColumn style="text-align: center;">
+                                        <img src="/assets/images/dos/View_white.png" style="    width: 32px;padding-left: 2px;">
+                                       </th>
+                                    <th pSortableColumn="testCode" style="width: 40px;text-align: center;" pFrozenColumn>
+                                        S.No<p-sortIcon field="testCode"></p-sortIcon></th>
+
+                                    <th pSortableColumn="testCode" style="width: 140px;text-align: center;" pFrozenColumn>Test Code
+                                        <p-sortIcon field="testCode"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="testName" class="" style="min-width: 445px;" pFrozenColumn>Test Name
+                                        <p-sortIcon field="testName"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="SampleType" class="hide_data" style="width: 120px;">Sample Type
+                                        <p-sortIcon field="SampleType"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="SampleVolume" class="hide_data" style="width: 120px;">Sample
+                                        Quantity <p-sortIcon field="SampleVolume"></p-sortIcon>
+                                    </th>
+
+                                    <!-- <th pSortableColumn="TestType" class="hide_data" style="width: 140px;">Test Type
+                                        <p-sortIcon field="TestType"></p-sortIcon>
+                                    </th> -->
+                                    <th pSortableColumn="MethodName" class="hide_data" style="width: 120px;">Method
+                                        <p-sortIcon field="MethodName"></p-sortIcon>
+                                    </th>
+                                    <!-- <th pSortableColumn="processingLocationName" class="hide_data" style="min-width: 230px;text-align: center;">Processing Location
+                                        <p-sortIcon field="processingLocationName"></p-sortIcon>
+                                    </th> -->
+
+                                    <!-- <th pSortableColumn="ScheduleDays" class="hide_data" style="min-width: 160px;">Test
+                                        Schedule
+                                        Days
+                                        <p-sortIcon field="ScheduleDays"></p-sortIcon>
+                                    </th>
+
+
+                                    <th pSortableColumn="testSchduleName" class="hide_data" style="min-width: 280px;">Test Schedule Name
+                                        <p-sortIcon field="testSchduleName"></p-sortIcon>
+                                    </th>
+                                    <th pSortableColumn="ReportedOn" class="hide_data" style="min-width: 190px;">Reported On
+                                        <p-sortIcon field="ReportedOn"></p-sortIcon>
+                                    </th> -->
+
+                                    <!-- Attune = No: show 3 separate columns -->
+                                    <ng-container *ngIf="!attuneFlag">
+                                        <th pSortableColumn="ScheduleDays" class="hide_data" style="min-width: 160px;">Test
+                                            Schedule Days
+                                            <p-sortIcon field="ScheduleDays"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="testSchduleName" class="hide_data" style="min-width: 280px;">Test Schedule Name
+                                            <p-sortIcon field="testSchduleName"></p-sortIcon>
+                                        </th>
+                                        <th pSortableColumn="ReportedOn" class="hide_data" style="min-width: 190px;">Reported On
+                                            <p-sortIcon field="ReportedOn"></p-sortIcon>
+                                        </th>
+                                    </ng-container>
+
+
+                                    <!-- Attune = Yes: single consolidated column -->
+                                   
+                                    <!-- Attune = Yes: single consolidated column -->
+                                    <th *ngIf="attuneFlag" pSortableColumn="ScheduleDays" class="hide_data" style="min-width: 220px; text-align: center;">
+                                        View Schedule &amp; TAT details
+                                        <p-sortIcon field="ScheduleDays"></p-sortIcon>
+                                    </th>
+
+
+                                    <!-- <th pSortableColumn="EstimationDate" class="hide_data" style="min-width: 230px;">Estimated Report Release
+                                        <p-sortIcon field="EstimationDate"></p-sortIcon>
+                                    </th> -->
+        
+                                    <th pSortableColumn="testFees" class="hide_data" style="width: 100px;">Price
+                                        <p-sortIcon field="testFees"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="CategoryName" class="hide_data" style="width: 100px;">Category
+                                        <p-sortIcon field="CategoryName"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="ProcessingDepartment" class="hide_data"
+                                        style="width: 120px;text-align: center;">
+                                        Department
+                                        <p-sortIcon field="ProcessingDepartment"></p-sortIcon>
+                                    </th>
+
+
+                                    <th pSortableColumn="FastingRequired" class="hide_data" style="width: 120px;">
+                                        Fasting
+                                        Req ?
+                                        <p-sortIcon field="FastingRequired"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="PatientConsentForm" class="hide_data" style="width: 120px;">
+                                        Consent
+                                        Form
+                                        <p-sortIcon field="PatientConsentForm"></p-sortIcon>
+                                    </th>
+
+
+
+
+
+                                    <th pSortableColumn="NABL" class="hide_data"
+                                        style="width: 120px;text-align: center;">
+                                        NABL
+                                        <p-sortIcon field="NABL"></p-sortIcon>
+                                    </th>
+
+                                    <th pSortableColumn="SampleType" class="hide_data" style="width: 120px;">Ship at
+                                        <p-sortIcon field="SampleType"></p-sortIcon>
+                                    </th>
+
+                                    <!-- <th pSortableColumn="isActive" class="hide_data" style="width: 100px;">Test Status
+                                        <p-sortIcon field="isActive"></p-sortIcon>
+                                    </th> -->
+                                    <th style="width: 80px;text-align: center;">Action</th>
+                                    <!-- <th> </th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-testDetails let-expanded="expanded"
+                                let-rowIndex="rowIndex">
+                                <tr [pSelectableRow]="testDetails">
+                                    <!-- <td class="td-link" pFrozenColumn
+                                    style="text-align: center;"> <img src="/assets/images/dos/View.png"
+                                    (click)="view_data(details_view,'lg',testDetails)" style="cursor:pointer">
+                                </td> -->
+                                <td class="td-link" pFrozenColumn style="text-align: center;">
+  <img src="/assets/images/dos/View.png"
+       (click)="view_data(details_view,'lg',testDetails)"
+       style="cursor:pointer">
+</td>
+                                    <td style="text-align: center;" pFrozenColumn>
+                                        <div class="expand_prime_btn" style="text-align: center;">
+                                            <button type="button" (click)="row_expand(testDetails)" pButton pRipple
+                                                [pRowToggler]="testDetails"
+                                                class="p-button-text p-button-rounded p-button-plain row_expand_btn expand_prime">
+                                                <img src="/assets/images/dos/{{ expanded ? 'prime_minius' : 'prime_plus'}}.png"
+                                                    alt="" style="height:10px">
+                                            </button>
+                                            <div>{{rowIndex+1}}</div>
+                                        </div>
+                                    </td>
+                                    <!-- <td title="{{testDetails.testName}}" class="hide_data"></td> -->
+
+                                    <td class="td-link" (click)="navigateToOverview(testDetails)"
+                                        style="text-align: center;" pFrozenColumn>{{testDetails.testCode}}
+                                    </td>
+                                    <td class="" title="{{testDetails.testName}}" pFrozenColumn>{{testDetails.testName.toLowerCase() !== 'null'  ? testDetails.testName : '' }}</td>
+
+                                    <td class="hide_data">{{testDetails.SampleType ? testDetails.SampleType : ''}}
+                                    </td>
+
+                                    <td class="hide_data">{{testDetails.SampleVolume ? testDetails.SampleVolume : ''}}
+                                    </td>
+                                    <!-- <td class="hide_data" style="text-align: center;">{{testDetails.TestType != '0' ?
+                                        testDetails.TestType : ''}}</td> -->
+
+                                    <td class="hide_data">{{testDetails.MethodName != '0' ? testDetails.MethodName :
+                                        ''}}
+                                    </td>
+                                    <!-- <td class="hide_data" style="text-align: center;">
+                                    {{
+                                        testDetails.processingLocationName &&
+                                        testDetails.processingLocationName.toLowerCase().trim() !== 'null'
+                                        ? testDetails.processingLocationName
+                                        : '-'
+                                    }}
+                                    </td> -->
+
+                                    <!-- <td class="hide_data">{{ testDetails.ScheduleDays.toLowerCase() !== 'null'  ?  testDetails.ScheduleDays :''}}
+                                    </td>
+
+                                    <td class="hide_data">{{testDetails.testSchduleName  ? testDetails.testSchduleName : ''}}
+                                    </td>
+                                    <td class="hide_data"
+                                        title="{{testDetails.ReportedOn != '0' ? testDetails.ReportedOn : ''}}">
+                                        {{testDetails.ReportedOn != '0' ? testDetails.ReportedOn : ''}}
+                                    </td> -->
+
+
+                                    <!-- Attune = No: 3 separate cells -->
+                                    <ng-container *ngIf="!attuneFlag">
+                                        <td class="hide_data">{{ testDetails.ScheduleDays.toLowerCase() !== 'null' ? testDetails.ScheduleDays : '' }}
+                                        </td>
+                                        <td class="hide_data">{{ testDetails.testSchduleName ? testDetails.testSchduleName : '' }}
+                                        </td>
+                                        <td class="hide_data"
+                                            title="{{ testDetails.ReportedOn != '0' ? testDetails.ReportedOn : '' }}">
+                                            {{ testDetails.ReportedOn != '0' ? testDetails.ReportedOn : '' }}
+                                        </td>
+                                    </ng-container>
+                                    <!-- Attune = Yes: single View button -->
+                                    <!-- Attune = Yes: single View icon -->
+                                    <td *ngIf="attuneFlag" class="hide_data" style="text-align: center;">
+                                        <img src="/assets/images/dos/View.png"
+                                            (click)="openSchedulePopup(tat_schedule_popup, 'lg', testDetails)"
+                                            style="cursor:pointer">
+                                    </td> 
+
+
+                                   <!-- <td class="hide_data" title="{{ getEstimationDate(testDetails) }}">
+                                        {{ getEstimationDate(testDetails) }} 
+                                    </td> -->
+                                    <td class="hide_data" style="text-align: end;"> ₹ {{
+                                        formatTestFees(testDetails.testFees)  }}</td>
+
+                                    <td class="hide_data" style="text-align: center;">{{testDetails.CategoryName ?
+                                        testDetails.CategoryName : ''}}
+                                    </td>
+
+                                    <td class="hide_data">{{testDetails.ProcessingDepartment ?
+                                        testDetails.ProcessingDepartment : ''}}
+                                    </td>
+
+                                    <td class="hide_data"
+                                        title="{{testDetails.FastingRequired ? testDetails.FastingRequired : '-'}}">
+                                        <div *ngIf="testDetails.FastingRequired.toLowerCase().trim()==='no'"
+                                            class="dosgreen">No</div>
+                                        <div *ngIf="testDetails.FastingRequired.toLowerCase().trim()==='yes'"
+                                            class="dosred">Yes</div>
+                                    </td>
+
+                                    <td class="hide_data"
+                                        title="{{testDetails.PatientConsentForm ? testDetails.PatientConsentForm : '-'}}">
+                                        <div class="dosgreen"
+                                            *ngIf="testDetails.PatientConsentForm.toLowerCase().trim()==='no'">No</div>
+                                        <div class="dosred"
+                                            *ngIf="testDetails.PatientConsentForm.toLowerCase().trim()==='yes'">Yes
+                                        </div>
+                                    </td>
+
+
+
+
+
+
+
+                                    <td class="hide_data" style="text-align: center;">
+                                        <div style=" text-align: center;"
+                                            *ngIf="testDetails.NABL.toLowerCase().trim()==='no'">No</div>
+                                        <div style=" text-align: center;"
+                                            *ngIf="testDetails.NABL.toLowerCase().trim()==='yes'">Yes</div>
+                                    </td>
+
+                                    <td class="hide_data">{{testDetails.ShipAt ? testDetails.ShipAt : ''}}
+                                    </td>
+
+                                    <!-- <td class="hide_data">{{testDetails.testFees != '0.0' ? testDetails.testFees : ''}}</td> -->
+
+
+
+
+                                    <!-- <td class="hide_data" style="text-align: center;"> <span
+                                            *ngIf="testDetails.isActive == 'Y'" class="dos_active_test"></span>
+                                        <span *ngIf="testDetails.isActive != 'Y'" class="dos_inactive_test"></span>
+                                        {{testDetails.isActive == "Y" ? "Active" : "Inactive"}}
+                                    </td> -->
+
+
+
+
+                                    <td style="text-align: center;">
+                                        <!-- <button class="add_cart" (click)="add_cart($event)">Add
+                                            to cart</button> -->
+
+                                        <!-- <button (click)="addToCart(testDetails)"
+                                        [ngClass]="{add_cart: !testDetails.isAdded && testDetails.isActive == 'Y', added_cart:testDetails.isAdded, add_dis_cart:testDetails.isActive == 'N'}">
+                                        {{ testDetails.isAdded ? 'Added' : 'Add to cart' }}
+                                    </button>  -->
+                                        <!-- <div> <img (click)="addToCart(testDetails)"
+                                                src="assets/images/dos/cart_before.png"
+                                                style="height:26px;width:32px;cursor:pointer"
+                                                *ngIf="!testDetails.isAdded && testDetails.isActive == 'Y'">
+                                        </div> -->
+                                        <!-- attuneFlag = Yes: loading spinner + conditional cart -->
+<ng-container *ngIf="attuneFlag">
+  <div>
+    <img src="../../../assets/images/loader.gif"
+         style="height:26px;width:32px;"
+         *ngIf="testDetails.isLoading">
+    <img (click)="addToCart(testDetails)"
+         src="assets/images/dos/cart_before.png"
+         style="height:26px;width:32px;cursor:pointer"
+         *ngIf="!testDetails.isAdded && testDetails.isActive == 'Y' && !testDetails.isLoading">
+  </div>
+  <div style="background: #005970;border-radius:5px;">
+    <img (click)="addToCart(testDetails)" src="assets/images/dos/cart_before.png"
+         style="height:26px;width:32px;cursor:pointer;filter: brightness(0) saturate(100%) invert(98%) sepia(2%) saturate(6%) hue-rotate(343deg) brightness(102%) contrast(102%);"
+         *ngIf="testDetails.isAdded">
+  </div>
+</ng-container>
+
+<!-- attuneFlag = No: direct add, no loading -->
+<ng-container *ngIf="!attuneFlag">
+  <div>
+    <img (click)="addToCart(testDetails)"
+         src="assets/images/dos/cart_before.png"
+         style="height:26px;width:32px;cursor:pointer"
+         *ngIf="!testDetails.isAdded && testDetails.isActive == 'Y'">
+  </div>
+  <div style="background: #005970;border-radius:5px;">
+    <img (click)="addToCart(testDetails)" src="assets/images/dos/cart_before.png"
+         style="height:26px;width:32px;cursor:pointer;filter: brightness(0) saturate(100%) invert(98%) sepia(2%) saturate(6%) hue-rotate(343deg) brightness(102%) contrast(102%);"
+         *ngIf="testDetails.isAdded">
+  </div>
+</ng-container>
+
+                             <div>
+                                            <img src="assets/images/dos/cart_disable.png"
+                                                style="height:26px;width:32px;cursor: not-allowed;"
+                                                *ngIf="testDetails.isActive == 'N'">
+                                        </div>
+
+
+                                    </td>
+                                    <!-- <td><img src="/assets/images/dos/View.png"
+                                            (click)="view_data(details_view,'lg',testDetails)" style="cursor:pointer">
+                                    </td> -->
+
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="rowexpansion">
+                                <tr class="mobile_expand">
+                                    <td colspan="4">
+                                        <div class="p-3">
+                                            <p-table dataKey="testName" [value]="selectedProduct">
+                                                <ng-template pTemplate="body" let-selectedProduct>
+                                <tr>
+                                    <td>Test Code</td>
+                                    <td>
+                                        <div style="white-space: normal !important;">{{selectedProduct.testCode}}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Test Name</td>
+                                    <td style="white-space: normal !important;">{{selectedProduct.testName}}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Sample Type</td>
+                                    <td>{{selectedProduct.SampleType ? selectedProduct.SampleType: '' }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Sample Quantity</td>
+                                    <td>{{selectedProduct.SampleVolume}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Test type</td>
+                                    <td>{{selectedProduct.TestType}}</td>
+                                </tr> -->
+
+                                <tr>
+                                    <td>Method Name</td>
+                                    <td>{{selectedProduct.MethodName}}</td>
+                                </tr>
+                                <tr>
+                                        <td>Processing Location</td>
+                                        <td>
+                                            {{
+                                            selectedProduct.processingLocationName &&
+                                            selectedProduct.processingLocationName.toLowerCase().trim() !== 'null'
+                                                ? selectedProduct.processingLocationName
+                                                : '-'
+                                            }}
+                                        </td>
+                                        </tr>
+
+                                <tr>
+                                    <td>Test Schedule Days</td>
+                                    <td>{{selectedProduct.ScheduleDays ? selectedProduct.ScheduleDays: '' }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Test Schedule Name</td>
+                                    <td>{{selectedProduct.testSchduleName ? selectedProduct.testSchduleName: '' }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Reported On</td>
+                                    <td>{{selectedProduct.ReportedOn}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Estimated Report Release</td>
+                                    <td>{{ getEstimationDate(selectedProduct) }}</td> 
+                                </tr>
+                                <tr>
+                                    <td>Processing Location</td>
+                                    <td>{{ selectedProduct.processingLocationName }}</td> 
+                                </tr>
+
+                                <tr>
+                                    <td>Price</td>
+                                    <td>
+
+                                        ₹ {{
+                                            formatTestFees(selectedProduct.testFees)  }}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Category</td>
+                                    <td>{{selectedProduct.CategoryName ? selectedProduct.CategoryName: '' }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>Department</td>
+                                    <td>{{selectedProduct.ProcessingDepartment}}</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>Fasting Req ?</td>
+                                    <td
+                                        title="{{selectedProduct.FastingRequired ? selectedProduct.FastingRequired : '-'}}">
+                                        <div *ngIf="selectedProduct.FastingRequired.toLowerCase().trim()==='no'"
+                                            class="dosgreen">No</div>
+                                        <div *ngIf="selectedProduct.FastingRequired.toLowerCase().trim()==='yes'"
+                                            class="dosred">Yes</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Consent Form</td>
+                                    <td
+                                        title="{{selectedProduct.PatientConsentForm ? selectedProduct.PatientConsentForm : '-'}}">
+                                        <div class="dosgreen"
+                                            *ngIf="selectedProduct.PatientConsentForm.toLowerCase().trim()==='no'">No
+                                        </div>
+                                        <div class="dosred"
+                                            *ngIf="selectedProduct.PatientConsentForm.toLowerCase().trim()==='yes'">Yes
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>NABL</td>
+                                    <td>
+                                        <div style="text-align: left;"
+                                            *ngIf="selectedProduct.NABL.toLowerCase().trim()==='no'">No</div>
+                                        <div style="text-align: left;"
+                                            *ngIf="selectedProduct.NABL.toLowerCase().trim()==='yes'">Yes</div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>Ship at</td>
+                                    <td>{{selectedProduct.ShipAt}}</td>
+                                </tr>
+
+
+
+
+
+
+
+                                <!-- <tr>
+                                    <td>Test Status</td>
+                                    <td> <span *ngIf="selectedProduct.isActive == 'Y'" class="dos_active_test"></span>
+                                        <span *ngIf="selectedProduct.isActive != 'Y'" class="dos_inactive_test"></span>
+                                        {{selectedProduct.isActive == "Y" ? "Active" : "Inactive"}}
+                                    </td>
+                                </tr> -->
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="6">There are no order for this product yet.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    </td>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="17" style="text-align: center; font-size: 16px;">No Data Available</td>
+                        </tr>
+                    </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #details_view>
+    <div class="info_pop_height">
+    <div class="modal-header">
+       
+        <div class="met_pdf_loc_head">
+            <div class="pull-left">
+                <div class="modal_title">Key Information</div>
+            </div>
+            <div>
+                <div class="total_download">
+                    <div class="pdf_download">
+                        <img src="/assets/images/dos/metropolis_green _new.png" alt="" style="width:155px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div (click)="closeModal()" aria-hidden="true" style="cursor: pointer;margin-top:-52px">&times;</div>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row"  >
+                    <div class="tbl_title">
+                        <div>Test Code </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.testCode}}</div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>Test Name </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.testName}} </div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row">
+                    <div class="tbl_title">
+                        <div>Method </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.MethodName}}</div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>Price </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">₹ {{
+                        formatTestFees(viewTestDetails.testFees) }}</div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row">
+                    <div class="tbl_title">
+                        <div>Category </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.CategoryName}}</div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>Sample Type </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.SampleType !='null' ? viewTestDetails.SampleType : '-'}}</div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row">
+                    <div class="tbl_title">
+                        <div>Sample Quantity </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.SampleVolume}}</div>
+                </div>
+            </div>
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>Sample Container </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.ContainerName}}</div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row">
+                    <div class="tbl_title">
+                        <div>Ship at </div>
+                        <div>:</div>
+                    </div>
+                    <div class="tbl_data">{{viewTestDetails.ShipAt}}</div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!attuneFlag">
+  <div class="col-12 mt-2">
+    <div class="data_flx even-row">
+      <div class="tbl_title">
+        <div>Test Schedule Days</div>
+        <div>:</div>
+      </div>
+      <div class="tbl_data">{{viewTestDetails.ScheduleDays}}</div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-2">
+    <div class="data_flx odd-row">
+      <div class="tbl_title">
+        <div>Test Schedule Name</div>
+        <div>:</div>
+      </div>
+      <div class="tbl_data">{{viewTestDetails.testSchduleName}}</div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-2">
+    <div class="data_flx even-row">
+      <div class="tbl_title">
+        <div>Reported On</div>
+        <div>:</div>
+      </div>
+      <div class="tbl_data">{{viewTestDetails.ReportedOn}}</div>
+    </div>
+  </div>
+</ng-container>
+
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>Fasting Req</div>
+                        <div>:</div>
+                    </div>
+                    <!-- <div class="tbl_data">{{viewTestDetails.ReportedOn}}</div> -->
+                    <div  *ngIf="viewTestDetails.FastingRequired.toLowerCase().trim()==='no'"
+                    class="dosgreen tbl_data">No</div>
+                <div *ngIf="viewTestDetails.FastingRequired.toLowerCase().trim()==='yes'" class="dosred tbl_data">Yes</div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="data_flx odd-row">
+                    <div class="tbl_title">
+                        <div>Consent Form</div>
+                        <div>:</div>
+                    </div>
+                    <!-- <div class="tbl_data">{{viewTestDetails.PatientConsentForm}}</div> -->
+                    <div *ngIf="viewTestDetails.PatientConsentForm.toLowerCase().trim()==='no'"
+                        class="dosgreen tbl_data">No</div>
+                    <div *ngIf="viewTestDetails.PatientConsentForm.toLowerCase().trim()==='yes'" class="dosred tbl_data">Yes</div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="data_flx even-row">
+                    <div class="tbl_title">
+                        <div>NABL</div>
+                        <div>:</div>
+                    </div>
+                    <!-- <div class="tbl_data">{{viewTestDetails.ReportedOn}}</div> -->
+                    <div class="tbl_data" *ngIf="viewTestDetails.NABL.toLowerCase().trim()==='no'">No</div>
+                    <div class="tbl_data" *ngIf="viewTestDetails.NABL.toLowerCase().trim()==='yes'">Yes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  
+
+   
+
+</ng-template>
+
+
+
+
+
+
+<!-- TAT Schedule & Details Popup (Attune = Yes) -->
+<ng-template #tat_schedule_popup>
+    <div class="info_pop_height">
+        <div class="modal-header">
+            <div class="met_pdf_loc_head">
+                <div class="pull-left">
+                    <div class="modal_title">Schedule &amp; TAT Details</div>
+                </div>
+                <div>
+                    <div class="total_download">
+                        <div class="pdf_download">
+                            <img src="/assets/images/dos/metropolis_green _new.png" 
+     onerror="this.src='assets/images/dos/metropolis_green_new.png'" 
+     alt="Metropolis" 
+     style="width:155px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div (click)="closeModal()" aria-hidden="true" style="cursor: pointer;margin-top:-52px">&times;</div>
+        </div>
+
+        <div class="modal-body">
+            <!-- Loader while API fetching -->
+            <div *ngIf="!selectedScheduleTest" style="text-align:center; padding: 30px;">
+                <img src="../../../assets/images/loader.gif" alt="" style="height:40px;">
+            </div>
+            <div *ngIf="selectedScheduleTest?.noData" style="text-align:center; padding: 30px; color: #666;">
+                <p>{{selectedScheduleTest.message}}</p>
+            </div>
+            <div *ngIf="selectedScheduleTest && !selectedScheduleTest.noData" class="row">
+
+                <!-- <div class="col-12 mt-2" *ngIf="isMHLStaff">
+                    <div class="data_flx odd-row">
+                        <div class="tbl_title">
+                            <div>Processing Location</div>
+                            <div>:</div>
+                        </div>
+                        <div class="tbl_data">{{ selectedScheduleTest.ProcessingOrgName ? selectedScheduleTest.ProcessingOrgName : '-' }}</div>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-2">
+                    <div class="data_flx even-row">
+                        <div class="tbl_title">
+                            <div>Test Schedule Days</div>
+                            <div>:</div>
+                        </div>
+                        <div class="tbl_data">{{ selectedScheduleTest.TestScheduleDays ? selectedScheduleTest.TestScheduleDays : '-' }}</div>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-2">
+                    <div class="data_flx odd-row">
+                        <div class="tbl_title">
+                            <div>Test Schedule Name</div>
+                            <div>:</div>
+                        </div>
+                        <div class="tbl_data">{{ selectedScheduleTest.TestSchedule ? selectedScheduleTest.TestSchedule : '-' }}</div>
+                    </div>
+                </div>
+                
+                <div class="col-12 mt-2">
+                    <div class="data_flx even-row">
+                        <div class="tbl_title">
+                            <div>Reported On</div>
+                            <div>:</div>
+                        </div>
+                        <div class="tbl_data">{{ selectedScheduleTest.ReportedOn ? selectedScheduleTest.ReportedOn : '-' }}</div>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="col-12 mt-2">
+                    <div class="data_flx odd-row">
+                        <div class="tbl_title">
+                            <div>Estimated Report TAT</div>
+                            <div>:</div>
+                        </div>
+                        <div class="tbl_data">{{ selectedScheduleTest.ReportTAT ? selectedScheduleTest.ReportTAT : '-' }}</div>
+                    </div>
+                </div> -->
+
+
+
+                <div class="col-12 mt-2" *ngIf="isMHLStaff">
+    <div class="data_flx odd-row">
+        <div class="tbl_title">
+            <div>Processing Location</div>
+            <div>:</div>
+        </div>
+        <div class="tbl_data">{{ selectedScheduleTest.ProcessingOrgName ? selectedScheduleTest.ProcessingOrgName : '-' }}</div>
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <div [ngClass]="isMHLStaff ? 'data_flx even-row' : 'data_flx odd-row'">
+        <div class="tbl_title">
+            <div>Test Schedule Days</div>
+            <div>:</div>
+        </div>
+        <div class="tbl_data">{{ selectedScheduleTest.TestScheduleDays ? selectedScheduleTest.TestScheduleDays : '-' }}</div>
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <div [ngClass]="isMHLStaff ? 'data_flx odd-row' : 'data_flx even-row'">
+        <div class="tbl_title">
+            <div>Test Schedule Name</div>
+            <div>:</div>
+        </div>
+        <div class="tbl_data">{{ selectedScheduleTest.TestSchedule ? selectedScheduleTest.TestSchedule : '-' }}</div>
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <div [ngClass]="isMHLStaff ? 'data_flx even-row' : 'data_flx odd-row'">
+        <div class="tbl_title">
+            <div>Reported On</div>
+            <div>:</div>
+        </div>
+        <div class="tbl_data">{{ selectedScheduleTest.ReportedOn ? selectedScheduleTest.ReportedOn : '-' }}</div>
+    </div>
+</div>
+
+<div class="col-12 mt-2">
+    <div [ngClass]="isMHLStaff ? 'data_flx odd-row' : 'data_flx even-row'">
+        <div class="tbl_title">
+            <div>Estimated Report TAT</div>
+            <div>:</div>
+        </div>
+        <div class="tbl_data">{{ selectedScheduleTest.ReportTAT ? selectedScheduleTest.ReportTAT : '-' }}</div>
+    </div>
+</div>
+
+
+                <!-- <div class="col-12 mt-2" *ngIf="(!selectedScheduleTest.TestScheduleDays || selectedScheduleTest.TestScheduleDays.trim() === '' || selectedScheduleTest.TestScheduleDays.trim() === '-') && 
+                                                (!selectedScheduleTest.TestSchedule || selectedScheduleTest.TestSchedule.trim() === '' || selectedScheduleTest.TestSchedule.trim() === '-') && 
+                                                (!selectedScheduleTest.ReportedOn || selectedScheduleTest.ReportedOn.trim() === '' || selectedScheduleTest.ReportedOn.trim() === '-') && 
+                                                (!selectedScheduleTest.ProcessingOrgName || selectedScheduleTest.ProcessingOrgName.trim() === '' || selectedScheduleTest.ProcessingOrgName.toLowerCase().trim() === 'null' || selectedScheduleTest.ProcessingOrgName.trim() === '-') && 
+                                                (!selectedScheduleTest.ReportTAT || selectedScheduleTest.ReportTAT.trim() === '' || selectedScheduleTest.ReportTAT.trim() === '-')">
+                    <div class="data_flx even-row">
+                        <div class="tbl_data" style="text-align: center; color: #999;">
+                            No schedule and TAT details available
+                        </div>
+                    </div>
+                </div> -->
+                
+            </div>
+        </div>
+    </div>
+</ng-template>

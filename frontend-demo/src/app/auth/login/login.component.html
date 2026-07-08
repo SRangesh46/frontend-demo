@@ -1,0 +1,114 @@
+<div class="login-section">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="logo_section">
+        <div class="logo_position"><img src="assets/images/max22.png" alt="" /></div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="dislog">
+
+
+        <div class="login-container">
+          <div class="login_h_text">
+            <div class="wish_text">
+              <span>{{routine}}</span> <span> <img style="width: 35px;margin: 20px 10px 15px 15px;" src="/assets/images/happiness.png" alt=""></span>
+            </div>
+            <div class="go_text">
+              Login to see your metrics & operations!
+            </div>
+          </div>
+          <form
+            class="login-form"
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
+          >
+
+          <div class="row">
+            <div class="padlog_launch col-sm-12 col-lg-8 col-md-8">
+              <!-- ============================================ -->
+              <div class="login-field form-group">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  id="loginUser"
+                  name="loginUser"
+                  formControlName="loginUser"
+                  [(ngModel)]="user.loginUser"
+                  autocomplete="off"
+                  class="form-control"
+                />
+                <div *ngIf="isSubmitted && f.loginUser.errors" class="text-danger">
+                  <p *ngIf="f.loginUser.errors.required">User name is required.</p>
+                </div>
+
+                <!-- <div class="form-group has-feedback " ng-class="{'has-error': f.input2.$invalid && myForm.input1.$touched}">
+                  <input class="form-control" type="text" id="loginUser"
+                  name="loginUser" [(ngModel)]="user.loginUser" placeholder="Username" formControlName="loginUser">
+                  <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true">
+              <div class="popover bottom error-message" ng-if="myForm.input1.$error.required && myForm.input1.$touched">
+              <div class="arrow"></div>
+              <h3 class="popover-title">User name is required.</h3>
+              </div>
+              </span>
+                </div> -->
+
+              </div>
+              <div class="login-field form-group">
+                <input
+                  [type]="inputType"
+                  placeholder="Password"
+                  id="password"
+                  name="password"
+                  formControlName="password"
+                  [(ngModel)]="user.password"
+                  autocomplete="off"
+                  class="form-control"
+                />
+
+                <div *ngIf="isSubmitted && f.password.errors" class="text-danger">
+                  <p *ngIf="f.password.errors.required">Password is required.</p>
+                </div>
+
+              </div>
+              <!-- ============================================ -->
+            </div>
+            <div class="padlog_launch col-sm-12 col-lg-4 col-md-4">
+              <!-- ============================================ -->
+              <div class="login_launch">
+                <button type="submit" id="loginButton">
+                  <div><i class="fa fa-rocket"></i></div>
+                  <div>LAUNCH</div>
+                </button>
+              </div>
+              <!-- ============================================ -->
+            </div>
+          </div>
+          </form>
+        </div>
+        <div class="loginintro">
+          <div class=""><img src="assets/images/login_intro_stat.png" alt="isolve" /></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+
+    </div>
+  </div>
+
+</div>
+
+<div class="footcontent">
+  <div class="footcontent_data">
+    <div class="fcon powerby">Powered by</div>
+    <div class="fcon"><img src="assets/images/isolve_blue.png" alt="isolve" /></div>
+    <div class="fcon copright"><i class="fa fa-copyright" aria-hidden="true"></i> iSolve Technologies · All Rights Reserved</div>
+  </div>
+</div>

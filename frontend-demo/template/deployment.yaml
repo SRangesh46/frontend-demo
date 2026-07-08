@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: onedos-catalogue-frontend-dev
+  namespace: dev
+  labels:
+    onedos-catalogue: frontend-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      onedos-catalogue: frontend-dev
+  template:
+    metadata:
+      labels:
+        onedos-catalogue: frontend-dev
+    spec:
+      containers:
+        - name: catalogue-frontend-dev
+          image: 100521177404.dkr.ecr.ap-south-1.amazonaws.com/mhl_dos_catalogue_frontend:latest
+          imagePullPolicy: Always
+          env:
+          - name: DB_USERNAME
+            valueFrom:
+              configMapKeyRef:
+                name: mhl-dos-catalogue-search-config
+                key: test
+          - name: DB_USER_PASSWD
+            valueFrom:
+              secretKeyRef:
+                name: mhl-dos-catalogue-search-secret
+                key: db-user-passwd
+          ports:
+            - containerPort: 80
+              name: http
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+            requests:
+              cpu: "100m"
+              memory: "128Mi"

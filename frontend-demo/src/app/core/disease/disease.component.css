@@ -1,0 +1,72 @@
+.scroll-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+    padding: 0 40px; /* Ensure some padding so arrows don't overlap */
+    margin-left: 105px;
+    margin-right: 105px;
+  }
+  
+  .scroll-btn-left,
+  .scroll-btn-right {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border-radius: 50%;
+  }
+  
+  .scroll-btn-left {
+    left: 10px;
+  }
+  
+  .scroll-btn-right {
+    right: 10px;
+  }
+  
+  .scroll-btn-left:hover,
+  .scroll-btn-right:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  .city_ip .themeinput .form-control {
+    padding-left: 35px;
+    padding-top: 5px;
+    width: 240px;
+    box-shadow: none;
+    margin-bottom: 20px;
+    border: 0 !important;
+    border-bottom: 2px solid #ebebeb !important;
+  }
+
+  .city_ip{
+    display: flex;
+    justify-content: end;
+  }
+  .city_name{
+    text-align: center;
+    font-size: 14px;
+  }
+  .img_city_name {
+    text-align: center;
+  }
+   
+  .scroll-btn-left, .scroll-btn-right {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  .scroll-btn-left.disabled, .scroll-btn-right.disabled {
+    pointer-events: none; /* Prevents click events */
+  }
+  

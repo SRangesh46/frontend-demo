@@ -1,0 +1,660 @@
+<div *ngIf="isLoading" class="overlay">
+  <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<header class="navhead navy-blue">
+  <div class="logo_pos_mbl">
+  <div class="sidelogo">
+    <a href="javascript:void(0)">
+      <img src="\assets\images\met_white.png" (click)="reload()" alt="" class="max-img" />
+      <!-- <img
+        src="\assets\images\logo_w_mini.png"
+        routerLink="/" routerLinkActive="active"
+        alt=""
+        class="mini-img"
+      /> -->
+    </a>
+  </div> 
+  <div class="headselopp">
+   
+    <div class="headsel">
+  
+      <!-- <tabset class="select_tab">
+        <tab heading="Human" id="tab1" style="padding:10px" (selectTab)="onTabClick($event)" [active]="isHuman"></tab>
+        <tab heading="Veterinary" style="padding:10px" (selectTab)="onTabClick($event)" [active]="isVertinary"></tab>
+      </tabset> -->
+
+
+      <div class="">
+        <div class="select-drop open_search left_search_icon">
+          <div class="themeinput" style="position: relative;">
+            <span class="search_icon_dos"><img src="/assets/images/dos/Search grey.png" alt=""></span>
+            <!-- <input type="text" class="form-control" placeholder="Search test"> -->
+            <!-- <p-dropdown [formControl]="searchedTest" optionValue="testName" [options]="popularTestMasterList" (keydown.enter)="searchTest()"
+              [virtualScrollItemSize]='50' [virtualScroll]="false" filterBy="testName" [filter]="true" [editable]="true"
+              [group]="true" optionLabel="testName" placeholder="Search test" [resetFilterOnHide]="true" [lazy]="true">
+              <ng-template let-group pTemplate="group">
+                <div class="flex align-items-center">
+                  <span>{{ group.label }}</span>
+                </div>
+              </ng-template>
+            </p-dropdown> -->
+
+
+
+            <p-autoComplete #autoComplete [formControl]="searchedTest" [suggestions]="filteredPopular"
+              dataKey="testName" (keydown.enter)="searchTest()" (onSelect)="searchTest()"
+              (onFocus)="!autoComplete.value && autoComplete.handleDropdownClick($event)"
+              (keyup)="getPopularTestKeyUp($event)" [lazy]="true" (completeMethod)="filterTest($event)" field="testName"
+              placeholder="Search test">
+              <!-- <ng-template let-group pTemplate="group">
+                <div class="flex align-items-center"> 
+                  <span>{{ group.label }}</span>
+                </div>
+              </ng-template> -->
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+
+
+   
+      <!-- <div class="">
+        <div class="select-drop location_set left_search_icon themeinput" style="min-width: 250px;">
+          <span class="loction_icon"></span>
+          <p-dropdown [formControl]="searchedLocation" optionValue="b2cLocationName" [options]="locationMasterList"
+            optionLabel="b2cLocationName" placeholder="Select location" (onChange)="setLocation($event)" [lazy]="true" [filter]="true" filterBy="b2cLocationName"
+            [resetFilterOnHide]="true">
+          </p-dropdown>
+
+                  </div>
+      </div> -->
+
+      <!-- <div class="select_city">
+        <div class="select-drop location_set left_search_icon themeinput" style="min-width: 250px;cursor: pointer;"
+          (click)="openModal(drop_city,'xl')">
+          <div class="themeinput" style="position: relative;">
+            <span class="loction_icon"></span>
+            <input placeholder="Search Location" [(ngModel)]="selectedLocations ">
+           
+          </div>
+        </div>
+      </div> -->
+
+
+
+      <div class="themeinput data_search" style="position: relative; float: left;">
+        <span class="loction_icon"></span>
+        <input type="text" placeholder="Search Location" class="form-control" [formControl]="searchedLocation"
+          (click)="openModal(drop_city,'xl')" readonly>
+      </div>
+    </div>
+    <div class="hum_vet_alg">
+      <!-- Human Tab -->
+      <!-- <div class="hum_img"
+        id="tab1" 
+        (click)="onTabClick('Human')" 
+        [class.active]="isHuman" 
+        title="Human"
+        [style.backgroundColor]="activeTabName === 'Human' ? backgroundColor : 'transparent'"
+        style="display: inline-block; padding: 10px; border-radius: 6px;">
+        <img src="/assets/images/dos/human.png" alt="" >
+      </div> -->
+    
+      <!-- Veterinary Tab -->
+      <!-- <div class="vet_img"
+        (click)="onTabClick('Veterinary')" 
+        [class.active]="isVertinary" 
+        title="Veterinary"
+        [style.backgroundColor]="activeTabName === 'Veterinary' ? backgroundColor : 'transparent'"
+        style="display: inline-block; padding: 10px; border-radius: 6px;">
+        <img src="/assets/images/dos/veterinary.png" alt="">
+      </div>
+    </div> -->
+    <!-- changes start -->
+    <div class="card" style="float:left;" (click)="flipCard()" [class.flip]="isFlipped">
+      <div class="flip-container">
+        <div class="flipper">
+          <!-- Front of the Card -->
+          <div class="front">
+            <div class="hum_img"
+            id="tab1"
+           
+            [class.active]="isHuman"
+            title="Human"
+            
+            [style.backgroundColor]="activeTabName === 'Human' ? backgroundColor : '#00984a'">
+            <img src="/assets/images/dos/hum.png" alt="Human" />
+       </div>
+       
+
+          </div>
+          <!-- Back of the Card -->
+          <div class="back">
+            <div class="vet_img"              
+            [class.active]="isVertinary"
+            title="veterinary"
+            [style.backgroundColor]="activeTabName === 'Veterinary' ? backgroundColor : '#00984a'">
+           
+           <img src="/assets/images/dos/vet.png" alt="Veterinary" style="height: 27px !important;width: 29px !important;"/>
+       </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+
+  </div>
+  
+
+    <!-- changes end-->
+  
+<div class="partion_pro">
+</div>
+    <div class="headsueser">
+
+      <div class="hdsuse" *ngIf="!username">
+        <!-- <img id="loginPopup" style="cursor: pointer;"
+          (click)="openModal(login_popup,'lg')" src="\assets\images\page_image\Profile.png" alt="" class="uu" /> -->
+          <img id="loginPopup" style="cursor: pointer;"
+  (click)="openLoginModal(login_popup,'lg')" src="\assets\images\page_image\Profile.png" alt="" class="uu" />
+        </div>
+      <!-- <div *ngIf="username"  class="nav_drop">
+
+           <img  src="\assets\images\page_image\user.png" alt=""
+           class="uu" />
+         </div> -->
+      <div class="nav_drop" *ngIf="username">
+        <div class="ssddropdown">
+          <div class="title_color" title="{{username}}">{{username}}</div>
+          <!-- <span>
+                <img src="/assets/images/MHL_DOS_admin/Drop_down_black.png" style="width:25px;" alt="" srcset="">
+               </span> -->
+        </div>
+      </div>
+      <div class="hdskart" style="cursor: pointer;" (click)="routerCart()"><img
+          src="\assets\images\page_image\Add to cart.png" alt="" class="uu" />
+        <span class="cart_count" style="color:white">{{addedCartCount}}</span>
+      </div>
+      <div class="hdmenu" style="display: flex;">
+        <div class="container-menu open-menu">
+          <div class="bar1"></div>
+          <div class="bar2"></div>
+          <div class="bar3"></div>
+        </div>
+        <!-- <button class="mini-sidetoggle open-menu">
+          <i class="fa fa-angle-double-left"></i>
+        </button>
+        <button class="mini-sidetoggle close-menu">
+          <i class="fa fa-angle-double-right"></i>
+        </button> -->
+      </div>
+
+      <div class="log_out" *ngIf="username" (click)="log_out(logout_popup,'md')">
+        <img src="/assets/images/dos/log_out.png" style="cursor: pointer;" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <ul class="lifehead-cycle">
+    <li>
+       <ngx-flag-picker
+      [selectedCountryCode]="selectedCountryCode"
+      [countryCodes]="countryCodes"
+      [showLabels]="true"
+      [showFlags]="true"
+      (changedCountryCode)="changeSelectedCountryCode($event)">
+    </ngx-flag-picker> 
+    </li>
+    <li class="head-notify">
+      <a><i class="fa fa-bell"></i><span class="offline"></span></a>
+    </li>
+
+    <li class="head-notify">
+      <img
+        src="\assets\images\page_image\search.png"
+        alt=""
+        class="uu"
+      />
+    </li>
+
+    <li class="head-notify">
+      <img
+        src="\assets\images\page_image\user.png"
+        alt=""
+        class="uu"
+      />
+    </li>
+
+
+    <li class="head-notify">
+      <img
+        src="\assets\images\page_image\kart.png"
+        alt=""
+        class="uu"
+      />
+    </li>
+
+
+    <li>
+       <div class="droptop" ngbDropdown>
+        <button class="head-setting" id="gfg" ngbDropdownToggle>
+          <i class="fa fa-user-circle usersiz"></i>{{username.Technician_Name}}
+        </button>
+        <div ngbDropdownMenu="gfg">
+          <button ngbDropdownItem>Profile</button>
+          <button ngbDropdownItem>Settings</button>
+          <button ngbDropdownItem (click)="logout()">Logout</button>
+        </div>
+      </div> 
+       <a><i class="fa fa-user-circle"></i>Admin</a>
+    </li>
+    <li>
+      <a><img class="head_isolve" src="\assets\images\isolve.png" alt="" /></a>
+    </li>
+  </ul> -->
+</header>
+
+
+<ng-template #login_popup>
+  <div class="modal-header">
+    <div class="modal_title"></div>
+    <div (click)="clearForm()" class="modal-close">&times;</div>
+  </div>
+  <div class="modal-body">
+    <div class="login_contain">
+      <div class="left_img">
+        <img src="/assets/images/dos/Sign in page.png" alt="">
+      </div>
+      <div class="login_form" [formGroup]="mobileForm">
+        <div class="login_head">Sign in</div>
+        <div class="themeinput">
+          <label for="">Mobile number</label>
+          <!-- <input class="form-control" placeholder="" type="tel" formControlName="mobileNumber"
+            (paste)="$event.preventDefault()" (keypress)="restrictAphabetsandSpecialKeys($event)" maxlength="10"
+            required [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.invalid }" />
+          <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+            <div *ngIf="f.mobileNumber.errors.required">Mobile Number Is Required</div>
+            <div *ngIf="f.mobileNumber.errors.minlength">Mobile Number Must Be 10 Characters</div>
+            <div *ngIf="f.mobileNumber.errors.maxlength">Mobile Number Must Not Exceed 10 Characters</div>
+            <div *ngIf="f.mobileNumber.errors.pattern">India Mobile Number Only Allowed</div>
+            <div *ngIf="mobileForm.get('mobileNumber')?.hasError('leadingZero')">First Digit Cannot Be 0.</div>
+          </div> -->
+
+
+          <div class="login">
+            <ngx-intl-tel-input [enableAutoCountrySelect]="true" [enablePlaceholder]="false" [searchCountryFlag]="true"
+              [searchCountryField]="[SearchCountryField.Iso2,SearchCountryField.Name]" [selectFirstCountry]="true"
+              [selectedCountryISO]="bindCountryNameFlag" [maxLength]="15" [phoneValidation]="true" required
+              [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.invalid }"
+              [numberFormat]="PhoneNumberFormat.National" name="mobileNumber" formControlName="mobileNumber"
+              (keydown.enter)="continueSendOTP(otp_popup,'lg')"></ngx-intl-tel-input>
+            <div *ngIf="submitted && f.mobileNumber.invalid" class="invalid-feedback">
+              <div *ngIf="f.mobileNumber.errors.required">Mobile Number is required</div>
+              <div *ngIf="!f.mobileNumber.valid && !f.mobileNumber.errors.required">Invalid Mobile Number</div>
+              <div *ngIf="f.mobileNumber.errors.pattern">Numbers only allowed</div>
+            </div>
+          </div>
+          <label for="" style="font-size: 12px !important;margin-top: 5px;">An OTP will sent on this number</label>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-login" (click)="continueSendOTP(otp_popup,'lg')">Continue</button>
+          </div>
+          <div class="col-12">
+            <div class="label_login">Don't have an account? <span class="sign_up_btn"
+                (click)="modalRef.hide(); openModal(signup_popup,'xl')">Sign up</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #otp_popup>
+  <div class="modal-header">
+    <div class="modal_title"></div>
+    <div (click)="clearForm()" class="modal-close">&times;</div>
+  </div>
+  <div class="modal-body">
+    <div class="login_contain">
+      <div class="left_img_signup">
+        <img src="/assets/images/dos/Sign in page.png" style="width: 100%;max-width: 300px;" alt="">
+      </div>
+      <div class="login_form" style="width: 50%;">
+        <div class="login_head">OTP</div>
+        <div class="themeinput">
+          <label for="">Enter OTP</label>
+          <div class="otp_login">
+            <ng-otp-input class="" [config]="{length:6, allowNumbersOnly:true,isPasswordInput:true}"
+              (onInputChange)="onOtpChange($event)" (keydown.enter)="VerifyOTPLogin()"></ng-otp-input>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-3">
+            <div class="resend_otp">
+              <!-- <div class="timer_sec">{{otpSec}} Sec</div> -->
+              <!-- OTP Countdown -->
+              <div class="timer_sec" *ngIf="!showResendButton">
+                <countdown [config]="config" (event)="handleEvent($event)"></countdown>&nbsp;<span>Minutes</span>
+
+              </div>
+              <!-- <div class="resend_btn">Resend OTP</div> -->
+              <!-- resend button -->
+              <div *ngIf="showResendButton">
+                <span><a class="resend_btn" style="cursor: pointer;" (click)="resendOtp()">Resend OTP</a></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-login" [ngClass]="{ 'btn-submit_disable': otpValue.length < 6 }"
+              [disabled]="otpValue.length < 6" (click)="VerifyOTPLogin()">Sign in</button>
+          </div>
+          <!-- <div class="col-12">
+            <div class="label_login"  >Already have an account?
+              <span class="sign_up_btn" (click)="clearForm()" (click)="openModal(signup_popup,'xl')">Sign in</span>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #signup_popup>
+  <div class="modal-header">
+    <div class="modal_title"></div>
+    <div (click)="clearForm()" class="modal-close">&times;</div>
+  </div>
+  <div class="modal-body" [formGroup]="signupForm">
+    <div class="login_contain">
+      <div class="left_img_signup">
+        <img src="/assets/images/dos/Sign up.png" style="max-width: 450px;" alt="">
+      </div>
+      <div class="login_form">
+        <div class="login_head">Sign up</div>
+        <div class="row login_form_row" (keydown.enter)="submitSignUpForm(otp_popup,'lg')">
+
+          <div class="col-12 mt-3">
+            <div class="themeinput">
+              <label for="">I am a<span style="color:red">*</span></label>
+              <div class="user_radio_btns">
+
+                <!-- <div class="user_radio" *ngFor="let item of userTypeMaster; let i = index">
+                  <input type="radio" [value]="item.Id" style="cursor: pointer;" [attr.name]="'myRadioGroup' + i" formControlName="usertypeid"
+                  >
+                  <label style="cursor: pointer;">{{item.TypeName}}</label>
+                </div> -->
+                <div class="user_radio" *ngFor="let item of userTypeMaster; let i = index">
+                  <input type="radio" [value]="item.Id" style="cursor: pointer;" (change)="changeUserType(item.Id)" [attr.id]="'radio' + i"
+                    [attr.name]="'myRadioGroup'" formControlName="usertypeid">
+                  <label style="cursor: pointer;" [attr.for]="'radio' + i">{{item.TypeName}}</label>
+                </div>
+
+              </div>
+              <div *ngIf="submitted1 && f1.usertypeid.errors" style="color:#DC3545;font-size: .875em;margin-top:7px">
+                User type is Required</div>
+            </div>
+
+          </div>
+
+          <ng-container *ngIf="f1.usertypeid.value">
+            <ng-container *ngIf="f1.usertypeid.value === 2">
+              <div class="col-12 mt-3">
+                <div class="themeinput">
+                  <label for="">Registration Number<span style="color:red">*</span></label>
+                  <input class="form-control" (keypress)="restrict_special_char($event)" (paste)="$event.preventDefault()"
+                    placeholder=" Enter registration number" (keypress)="restrictFirstLetterSpace($event)" formControlName="registrationNo" required
+                    [ngClass]="{ 'is-invalid': f1.registrationNo.touched && f1.registrationNo.invalid || submitted1 && f1.registrationNo.invalid }" />
+                  <div *ngIf="f1.registrationNo.touched && f1.registrationNo.invalid || submitted1 && f1.registrationNo.invalid" class="invalid-feedback">
+                    <div *ngIf="f1.registrationNo.errors.required"> Registration number is required</div>
+                    <div *ngIf="f1.registrationNo.errors.pattern"> Pls enter a valid registration number</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="f1.usertypeid.value === 4">
+              <div class="col-12 mt-3">
+                <div class="themeinput">
+                  <label for="">Client Code<span style="color:red">*</span></label>
+                  <input class="form-control" (keypress)="restrict_special_char($event)" (paste)="$event.preventDefault()"
+                    placeholder=" Enter client code" (keypress)="restrictFirstLetterSpace($event)" formControlName="clientCode" required
+                    [ngClass]="{ 'is-invalid': f1.clientCode.touched && f1.clientCode.invalid || submitted1 && f1.clientCode.invalid }" />
+                  <div *ngIf="f1.clientCode.touched && f1.clientCode.invalid || submitted1 && f1.clientCode.invalid" class="invalid-feedback">
+                    <div *ngIf="f1.clientCode.errors.required"> Client code is required</div>
+                    <div *ngIf="f1.clientCode.errors.pattern"> Pls enter a valid client code</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-container *ngIf="f1.usertypeid.value === 3">
+              <div class="col-12 mt-3">
+                <div class="themeinput">
+                  <label for="">Employee ID<span style="color:red">*</span></label>
+                  <input class="form-control" (keypress)="restrict_special_char($event)" (paste)="$event.preventDefault()"
+                    placeholder="Enter employee id" (keypress)="restrictFirstLetterSpace($event)" formControlName="employeeId" required
+                    [ngClass]="{ 'is-invalid': f1.employeeId.touched && f1.employeeId.invalid || submitted1 && f1.employeeId.invalid }" />
+                  <div *ngIf="f1.employeeId.touched && f1.employeeId.invalid || submitted1 && f1.employeeId.invalid" class="invalid-feedback">
+                    <div *ngIf="f1.employeeId.errors.required"> Employee id is required</div>
+                    <div *ngIf="f1.employeeId.errors.pattern"> Pls enter a valid employee id</div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="col-12 mt-3">
+              <div class="themeinput">
+                <label for="">Full Name<span style="color:red">*</span></label>
+                <input class="form-control" (keypress)="restrict_special_char($event)" (paste)="$event.preventDefault()"
+                  placeholder=" Enter full name" (keypress)="restrictFirstLetterSpace($event)"
+                  (keypress)="allowAlphabetsOnly($event)" formControlName="name" required
+                  [ngClass]="{ 'is-invalid': f1.name.touched && f1.name.invalid || submitted1 && f1.name.invalid }" />
+                <div *ngIf="f1.name.touched && f1.name.invalid || submitted1 && f1.name.invalid" class="invalid-feedback">
+                  <div *ngIf="f1.name.errors.required"> Full name is required</div>
+                  <div *ngIf="f1.name.errors.minlength"> Full name must be at least 2 characters</div>
+                  <div *ngIf="f1.name.errors.maxlength">Full name must not exceed 50 characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="themeinput">
+                <label for="">Email ID<span style="color:red">*</span></label>
+                <input type="text" class="form-control" formControlName="emailid" required
+                  (keypress)="restrictFirstLetterSpace($event)"
+                  [ngClass]="{ 'is-invalid': submitted1 && f1.emailid.errors}" placeholder="Enter email id" />
+                <div *ngIf="submitted1 && f1.emailid.errors || (submitted1 && f1.usertypeid.value === 3)" class="invalid-feedback">
+                  <div *ngIf="f1.emailid.errors.required">Email Id is required</div>
+                  <div *ngIf="f1.emailid.errors.pattern && f1.usertypeid.value !== 3">Email Id is invalid</div>
+                  <div *ngIf="f1.emailid.errors.pattern && f1.usertypeid.value === 3">Invalid email, domain should be '&#64;metropolisindia.com'</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <div class="themeinput">
+                <label for="">Mobile Number<span style="color:red">*</span></label>
+                <div class="login">
+                  <ngx-intl-tel-input [enableAutoCountrySelect]="true" [enablePlaceholder]="true"
+                    [searchCountryFlag]="true" [searchCountryField]="[SearchCountryField.Iso2,SearchCountryField.Name]"
+                    [selectFirstCountry]="true" [selectedCountryISO]="bindCountryNameFlag" [maxLength]="15"
+                    [phoneValidation]="true" required [ngClass]="{ 'is-invalid': submitted1 && f1.mobileNumber.invalid }"
+                    [numberFormat]="PhoneNumberFormat.National" name="mobileNumber"
+                    formControlName="mobileNumber"></ngx-intl-tel-input>
+                  <div *ngIf="submitted1 && f1.mobileNumber.invalid" class="invalid-feedback">
+                    <div *ngIf="f1.mobileNumber.errors.required">Mobile Number is required</div>
+                    <div *ngIf="!f1.mobileNumber.valid && !f1.mobileNumber.errors.required">Invalid Mobile Number</div>
+                    <div *ngIf="f1.mobileNumber.errors.pattern">Numbers only allowed</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 mt-3">
+                <div class="themeinput">
+                  <label for="">Age </label>
+                  <input type="text" (keypress)="allowNumbersOnly($event)" class="form-control" placeholder="Age"
+                    formControlName="age" maxlength="3" minlength="1"
+                    [ngClass]="{ 'is-invalid': submitted1 && f1.age.errors }">
+    
+                  <div *ngIf="submitted1 && f1.age.errors " class="invalid-feedback">
+                    <div *ngIf="f1.age.errors">Invalid Age</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 mt-3">
+                <div class="themeinput ">
+                  <label>Gender</label>
+                  <select class="form-control" formControlName="genderid" style="cursor: pointer;">
+                    <option value="">--Select Gender-- </option>
+                    <option *ngFor="let data of genderMasterList" style="cursor: pointer;" [value]=data.Id>{{data.Gender}}
+                    </option>
+                  </select>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <button class="btn btn-login" (click)="submitSignUpForm(otp_popup,'lg')">Continue</button>
+          </div>
+
+          </ng-container>
+        </div>
+        <div class="mt-2">
+          <!-- <div class="col-12">
+            <button class="btn btn-login" (click)="submitSignUpForm(otp_popup,'lg')">Continue</button>
+          </div> -->
+          <div class="col-12">
+            <div class="label_login">Already have an account?
+              <span class="sign_up_btn" style="cursor: pointer;" (click)="clearForm()"
+                (click)="openModal(login_popup,'lg')">Sign in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
+
+
+<ng-template #logout_popup>
+  <div class="modal-header">
+    <div class="pull-left log_out_title">
+      <div class="modal_title">Are you sure, Do you want to logout ?</div>
+    </div>
+    <!-- <button type="button"
+      class="modal_close"
+      (click)="closeModal()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true" class="">&times;</span>
+    </button> -->
+  </div>
+  <div class="modal-body">
+    <!-- ============ content Start============== -->
+    <div class="row mt-3">
+      <div class="col-lg-12">
+        <div class="text-end logout">
+          <button class="btn lifebtn-outline" type="button" (click)="modalRef.hide()">Cancel</button>
+          <button class="btn lifebtn-primary ml-3" type="submit" (click)="logout()">Yes</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="city_drop_pos">
+  <ng-template #drop_city>
+    <div class="city_pop_cust">
+      <div class="modal-header">
+        <div class="pull-left">
+          <div class="modal_title">Choose Your City</div>
+        </div>
+        <div (click)="closeDropCity()" aria-hidden="true" style="cursor: pointer;">&times;</div>
+      </div>
+    </div>
+    <div class="city_pop_cust">
+      <div class="modal-body">
+        <div class="login-modal-desc">Most Popular</div>
+        <!-- <div class="row">
+          <div class="col-12">
+            <div class="mt-4">
+              <div class="row">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-2 col-xxl-2 img_city_name" 
+                     *ngFor="let data of mostPopularLocationList">
+                  <div  (click)="setLocation(data)">
+                    <img src="{{data.LocationIcon}}" alt="" style="height:70px;cursor: pointer;">
+                    <div class="city_name" style="height:70px;cursor: pointer;">{{data.b2cLocationName}}</div>
+                  </div>
+                </div>
+             </div>
+             
+            </div>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-12">
+            <div class="mt-4">
+              <!-- Left Arrow Button -->
+              <!-- <button class="scroll-btn-left">←</button> -->
+              <img class="scroll-btn-left" src="/assets/images/dos/Left_Click.png"
+                *ngIf="mostPopularLocationList.length >6" (click)="scrollLeft()">
+
+              <!-- Scrolling container -->
+              <div class="scroll-container" style="display: flex; overflow-x: auto; scroll-behavior: smooth;">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-2 col-xxl-2 img_city_name"
+                  *ngFor="let data of mostPopularLocationList">
+                  <div (click)="setLocation(data)">
+                    <img src="{{data.LocationIcon}}" alt="" style="height:70px;cursor: pointer;">
+                    <div class="img_below__city_name" style="height:70px;cursor: pointer;">{{data.b2cLocationName}}</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Arrow Button -->
+              <!-- <button (click)="scrollRight()">→</button> -->
+              <img class="scroll-btn-right" src="/assets/images/dos/Right_Click.png"
+                *ngIf="mostPopularLocationList.length >6" (click)="scrollRight()">
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+        <div class="city_line"></div>
+
+        <div class="login-modal-desc">All Cities</div>
+        <div class="city_ip">
+          <div class="themeinput" style="position: relative;">
+            <span class="search_icon_dos_table">
+              <img src="/assets/images/dos/Search grey.png" alt="" style="height:16px">
+            </span>
+            <input type="text" id="placehold" placeholder="Search" [ngModel]="isInput"  [formControl]="myControl" class="form-control">
+          </div>
+        </div>
+
+        <div class="city_loc mt-4">
+          <div class="row">
+            <div *ngIf="noRecordsFound" class="col-12" style="text-align: center;">
+              <div>No City Found</div>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 img_citys_name"
+              *ngFor="let data of filteredLocationList">
+              <div class="loc_city">
+                <img src="/assets/images/dos/location_city.png" alt="" style="height:16px; cursor: pointer;">
+                <div class="city_name_location" style="height:70px;cursor: pointer;" (click)="setLocation(data)">
+                  {{data.b2cLocationName}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: onedos-catalogue-frontend-dev-svc
+  namespace: dev
+spec:
+  selector:
+    onedos-catalogue: frontend-dev
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

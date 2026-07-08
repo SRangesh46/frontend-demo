@@ -1,0 +1,1426 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="content-panel">
+    <div class="row">
+        <div class="col-12">
+            <div class="map">
+                <div class="map_element" routerLink="" style="cursor: pointer;">Home</div>
+                <div *ngIf="historyObject.fromPage == 'home'" class="map_element" (click)="navigateToList()"
+                    routerLink="/list" style="cursor: pointer;">List</div>
+                <div *ngIf="historyObject.fromPage == 'cart'" class="map_element" routerLink="/cart"
+                    style="cursor: pointer;">Cart</div>
+                
+                <div *ngIf="historyObject.fromPage && historyObject.tabName" class="map_element" 
+                    style="cursor: pointer;" (click)=navigateByUrl(historyObject.fromPage,historyObject.tabName) >{{historyObject.tabName}}</div> 
+
+                <div *ngIf="historyObject.fromPage != 'home' && historyObject.fromPage != 'cart' && historyObject.name" class="map_element"
+                    (click)=navigateByUrl(historyObject.fromPage) style="cursor: pointer;">{{historyObject.name}}</div>
+                <!-- <div *ngIf="historyObject.fromPage != 'home' && historyObject.fromPage != 'cart' && historyObject.fromPage != 'speciality-testing'"
+                    class="map_element"
+                    (click)="navigateByUrl(historyObject.fromPage)"
+                    style="cursor: pointer;">
+                   {{historyObject.name}}
+               </div> -->
+
+                <div class="map_element">{{tab}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <div class="row overview_tab_head_column_reverse">
+                <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                    <div class="title_heading">{{testInfo.testCode}} - {{testInfo.testName ? testInfo.testName : ''}}
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                    <div class="sharediv">
+                        <div class="sharing-img"><img src="/assets/images/dos/Whatsapp icon.png" alt=""></div>
+                        <div class="sharing-img"><img src="/assets/images/dos/Mail icon.png" alt=""></div>
+                        <div class="sharing-img"><img src="/assets/images/dos/Message icon.png" alt=""></div>
+                        <div class="sharing-img"><img src="/assets/images/dos/Print icon.png" alt=""></div>
+                        <div class="sharing-img"><img src="/assets/images/dos/Download icon.png" alt=""></div>
+                        <!-- <div [ngClass]="{overaddtocart: !testData.isAdded, overaddedtocart:testData.isAdded, overaddtocartdis:testData.isActive == 'N'}"
+                            (click)="addToCart(testData)">
+                            {{ testData.isAdded ? 'Added' : 'Add to cart' }}
+                        </div> -->
+                        <!-- <div *ngIf="testData.isLoading" style="cursor:default;">
+    <img src="../../../assets/images/loader.gif" style="height:26px;width:32px;">
+</div>
+<div *ngIf="!testData.isLoading"
+    [ngClass]="{overaddtocart: !testData.isAdded, overaddedtocart:testData.isAdded, overaddtocartdis:testData.isActive == 'N'}"
+    (click)="addToCart(testData)">
+    {{ testData.isAdded ? 'Added' : 'Add to cart' }}
+</div> -->
+
+
+<!-- attuneFlag = Y: spinner + conditional cart-->
+<ng-container *ngIf="attuneFlag">
+  <div *ngIf="testData.isLoading" style="cursor:default;">
+    <img src="../../../assets/images/loader.gif" style="height:26px;width:32px;">
+  </div>
+  <div *ngIf="!testData.isLoading"
+      [ngClass]="{overaddtocart: !testData.isAdded, overaddedtocart:testData.isAdded, overaddtocartdis:testData.isActive == 'N'}"
+      (click)="addToCart(testData)">
+      {{ testData.isAdded ? 'Added' : 'Add to cart' }}
+  </div>
+</ng-container>
+
+<!-- attuneFlag = N: no spinner, direct add -->
+<ng-container *ngIf="!attuneFlag">
+  <div [ngClass]="{overaddtocart: !testData.isAdded, overaddedtocart:testData.isAdded, overaddtocartdis:testData.isActive == 'N'}"
+      (click)="addToCart(testData)">
+      {{ testData.isAdded ? 'Added' : 'Add to cart' }}
+  </div>
+</ng-container>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    <nav>
+                        <div class="dos_nav">
+                            <ul>
+                                <li (click)="nav_link('Overview')" class="nav_link Overview active"><a>Overview</a></li>
+                                <!-- <li (click)="nav_link('Guidelines')" class="nav_link Guidelines"><a>Sample Guidelines &
+                                        Forms</a></li> -->
+                                <li (click)="nav_link('Guidelines')" class="nav_link Guidelines"><a>Sample
+                                        Guidelines</a></li>
+                                <li (click)="nav_link('Additional')" class="nav_link Additional"><a>Test
+                                        Schedule</a></li>
+                                <li (click)="nav_link('Test_Fees')" class="nav_link Test_Fees"><a> Test
+                                        Fees and Category</a></li>
+                                <li (click)="nav_link('Information')" class="nav_link Information"><a>Clinical
+                                        Information & Resources</a></li>
+                                <li (click)="nav_link('Reports')" class="nav_link Reports"><a>Reports</a></li>
+                                <!-- <li (click)="nav_link('Additional')" class="nav_link Additional"><a>Additional
+                                        information</a></li> -->
+                                <!-- <li (click)="nav_link('Test_Fees')" class="nav_link Test_Fees"><a>Category and Test
+                                        Fees</a></li> -->
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+                    <div class=" overview tab-container">
+                        <div class="row">
+                            <div class="col-12">
+                                <section id="Overview">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Test Information</div>
+                                            <div class="overview-tab-content">
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test code</div>
+                                                    <div class="heading_ans">{{testInfo.testCode ? testInfo.testCode :
+                                                        ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test name</div>
+                                                    <div class="heading_ans">{{testInfo.testName ? testInfo.testName :
+                                                        ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Department <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Department}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.departmentName ?
+                                                        testInfo.departmentName : ''}}
+                                                    </div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Method <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Method}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.MethodName != '0' ?
+                                                        testInfo.MethodName
+                                                        : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Gender 
+                                                        <!-- <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{testGender}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span> -->
+                                                            </div>
+                                                    <div class="heading_ans">{{testGender}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test parameters (Name) <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo['Testparameters(Name)']}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.testParametersName ?
+                                                        testInfo.testParametersName :
+                                                        ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test parameters (Count) <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo['Testparameters(Count)']}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.testParametersCount != '0' ?
+                                                        testInfo.testParametersCount : ""}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Report display name <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Reportdisplayname}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.ReportDisplayName ?
+                                                        testInfo.ReportDisplayName :
+                                                        ''}}</div>
+                                                </div>
+
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">NABL <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.NABL}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">
+                                                        <ng-container *ngIf="attuneFlag">
+                                                            {{attuneScheduleData?.NABL ? attuneScheduleData.NABL : (testSheduledays?.IsNABL ? testSheduledays.IsNABL : '')}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="!attuneFlag">
+                                                            {{testSheduledays?.IsNABL ? testSheduledays.IsNABL : ''}}
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Website Name <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Alternatename}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <!-- <div class="heading_ans"
+                                                        *ngIf="testInfo.AlternateName1 == '' && testInfo.AlternateName2 == '' && testInfo.AlternateName3 == ''">
+
+                                                    </div> -->
+                                                    <div class="heading_ans">
+                                                        {{testInfo.AlternateName1
+                                                        ? testInfo.AlternateName1 :''}}
+                                                    </div>
+                                                    <!-- <div class="heading_ans" *ngIf="testInfo.AlternateName2 != ''">
+                                                        {{testInfo.AlternateName2
+                                                        ? testInfo.AlternateName2 : ''}}
+                                                    </div> -->
+                                                    <!-- <div class="heading_ans" *ngIf="testInfo.AlternateName3 != ''">
+                                                        {{testInfo.AlternateName3
+                                                        ? testInfo.AlternateName3 : ''}}</div> -->
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Published on <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Publishedon}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.publishedOn ?
+                                                        testInfo.publishedOn : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Walkin<span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.WalkinTest}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.WalkinTest ?
+                                                        testInfo.WalkinTest : ''}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="tab-main mt-3">
+                                            <div class="tab-head">Laboratory List</div>
+                                            <div class="overview-tab-content list-tab-content">
+                                                <div class="content_overview lab_list">
+                                                    <div class="heading_ques"></div>
+                                                    <div class="heading_ans">{{testInfo.laboratoryList ?
+                                                        testInfo.laboratoryList : ''}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-12">
+                                <section id="Guidelines">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Sample Information</div>
+                                            <div class="overview-tab-content">
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Sample container <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Samplecontainer}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="imd_align">
+                                                        <div *ngFor="let containerInfo of  containerInfo" class="img_ans_align">
+                                                            <div class="heading_ans sample_container_img"
+                                                                *ngIf="containerInfo.containerImage=='0' || !containerInfo.containerImage">
+                                                                <img 
+                                                                    src="https://dos-2-prod.s3.ap-south-1.amazonaws.com/SampleContainer/No-Image-Placeholder.png"
+                                                                    alt="">
+                                                            </div>
+
+                                                            <div class="heading_ans sample_container_img"
+                                                                *ngIf="containerInfo.containerImage!='0'">
+                                                                <img 
+                                                                    src="{{containerInfo.containerImage}}" alt="">
+                                                            </div>
+
+                                                            <div class="heading_ans">{{containerInfo.ContainerName ?
+                                                                containerInfo.ContainerName :
+                                                                ''}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="content_overview">
+                                                    <div class="heading_ques">Sample type <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Sampletype}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div style="display: flex;gap:5px">
+                                                        <div *ngFor="let sampleType of sampleType">
+
+                                                            <div class="heading_ans">{{sampleType.SampleType}} <span
+                                                                    *ngIf="sampleType.length > 1">,</span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div> -->
+                                                <div class="content_overview">
+  <div class="heading_ques">
+    Sample type 
+    <span>
+      <img
+        src="/assets/images/dos/Information icon.png"
+        tooltip="{{ fieldInfo.Sampletype }}"
+        [adaptivePosition]="false"
+        placement="right"
+        class="info_icon_dos"
+        alt=""
+      />
+    </span>
+  </div>
+
+<div class="sample_type_wrapper">
+  <div 
+    class="heading_ans" 
+    *ngFor="let sample of sampleType; let last = last"
+    [class.sample_border]="!last"
+  >
+    {{ sample.SampleType }}
+    <span *ngIf="sampleType.length > 1 && !last">,</span>
+  </div>
+</div>
+
+</div>
+
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Sample volume <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Samplevolume}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.SampleVolume ?
+                                                        testInfo.SampleVolume : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Shipping Temperature & Sample Stability
+                                                        <span><img src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Shippingtemparature}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span>
+                                                    </div>
+                                                    <div class="heading_ans">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <!-- <th>S 2-8C</th>
+                                                                    <th>A 25 C</th>
+                                                                    <th>R28C</th>
+                                                                    <th>F20C</th> -->
+                                                                    <th>Shipping Temperature </th>
+                                                                    <th>Ambient 25°C</th>
+                                                                    <th>Refrigerated 2-8°C </th>
+                                                                    <th>Frozen 20°C</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{testInfo['S2-8C'] ? testInfo['S2-8C'] : ''}}
+                                                                    </td>
+                                                                    <td>{{testInfo['A25C'] ? testInfo['A25C'] : ''}}
+                                                                    </td>
+                                                                    <td>{{testInfo['R28C'] ? testInfo['R28C'] : ''}}
+                                                                    </td>
+                                                                    <td>{{testInfo['F20C'] ? testInfo['F20C'] : ''}}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Rejected, if any <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo['Rejected,ifany']}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.Rejection?.length > 0 ?
+                                                        testInfo.Rejection[0].rejectionName
+                                                        : ''}}</div>
+                                                    <!-- <div class="heading_ans">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Hemolysis</th>
+                                                                    <th>NA</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let data of fieldInfo.Rejection">
+                                                                    <td>-</td>
+                                                                    <td>-</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div> -->
+                                                </div>
+
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Sample retention <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Sampleretention}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.sampleRetention ?
+                                                        testInfo.sampleRetention : ''}}
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="content_overview">
+                                                    <div class="heading_ques">Specimen stability information <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Specimenstabilityinformation}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">
+                                                        <table>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Specimen type</th>
+                                                                    <th>Temperature</th>
+                                                                    <th>Time</th>
+                                                                    <th>Specimen container</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>{{testInfo.specimenType ? testInfo.specimenType
+                                                                        : ''}}</td>
+                                                                    <td>{{testInfo.temperature ? testInfo.temperature :
+                                                                        ''}}</td>
+                                                                    <td>{{testInfo.Time ? testInfo.Time : ''}}</td>
+                                                                    <td>{{testInfo.specimenContainer ?
+                                                                        testInfo.specimenContainer : ''}}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> -->
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Collection instruction <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Collectioninstruction}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.SampleType?.length > 0 ?
+                                                        testInfo.SampleType[0]?.collectionInstruction ?
+                                                        testInfo.SampleType[0].collectionInstruction :'-'
+                                                        : ''}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="tab-main mt-3">
+                                            <div class="tab-head">Forms</div>
+                                            <div class="overview-tab-content">
+                                                <div class="form_pdf_name" *ngIf="testInfo.formsTitle">
+                                                    <span
+                                                        (click)="downloadPdf(testInfo.formsPdf)">{{testInfo.formsTitle}}</span>
+                                                    <span><img src="/assets/images/dos/pdf png.png" alt=""></span>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-12">
+                                <section id="Additional">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Test Schedule</div>
+                                            <div class="overview-tab-content">
+
+
+                                                <!-- <div class="content_overview">
+                                                    <div class="heading_ques">Test schedule Days <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.TestScheduleDays}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">
+                                                        {{testSheduledays?.TestScheduleDays ?
+                                                        testSheduledays?.TestScheduleDays : ''}}
+
+                                                        //command this
+                                                        {{testInfo?.OrgWiseInfo[0]?.TestScheduleDays ?
+                                                        testInfo?.OrgWiseInfo[0]?.TestScheduleDays : ''}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test schedule<span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Testschedulename}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.testSchduleName ?
+                                                        testInfo.testSchduleName : ''}}
+                                                    </div>
+                                                </div>
+
+
+                                                // command this
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test schedule <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Testschedule}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.testSchdule ?
+                                                        testInfo.testSchdule : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Reported on <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Reportedon}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.ReportedOn ? testInfo.ReportedOn
+                                                        : ''}}</div>
+                                                </div> -->
+                                                <!-- Attune = No: data from DOS DB -->
+                                                <ng-container *ngIf="!attuneFlag">
+                                                    <div class="content_overview">
+                                                        <div class="heading_ques">Test schedule Days <span><img
+                                                                    src="/assets/images/dos/Information icon.png"
+                                                                    tooltip="{{fieldInfo.TestScheduleDays}}"
+                                                                    [adaptivePosition]="false" placement="right"
+                                                                    class="info_icon_dos" alt=""></span></div>
+                                                        <div class="heading_ans">
+                                                            {{testSheduledays?.TestScheduleDays ?
+                                                            testSheduledays?.TestScheduleDays : ''}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="content_overview">
+                                                        <div class="heading_ques">Test schedule<span><img
+                                                                    src="/assets/images/dos/Information icon.png"
+                                                                    tooltip="{{fieldInfo.Testschedulename}}"
+                                                                    [adaptivePosition]="false" placement="right"
+                                                                    class="info_icon_dos" alt=""></span></div>
+                                                        <div class="heading_ans">{{testInfo.testSchduleName ?
+                                                            testInfo.testSchduleName : ''}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="content_overview">
+                                                        <div class="heading_ques">Reported on <span><img
+                                                                    src="/assets/images/dos/Information icon.png"
+                                                                    tooltip="{{fieldInfo.Reportedon}}"
+                                                                    [adaptivePosition]="false" placement="right"
+                                                                    class="info_icon_dos" alt=""></span></div>
+                                                        <div class="heading_ans">{{testInfo.ReportedOn ? testInfo.ReportedOn : ''}}</div>
+                                                    </div>
+                                                </ng-container>
+
+                                                <!-- Attune = Yes: data from Attune API -->
+<ng-container *ngIf="attuneFlag">
+    <!-- Loader while fetching -->
+    <div *ngIf="!attuneScheduleData" style="text-align:center; padding: 20px;">
+        <img src="../../../assets/images/loader.gif" alt="" style="height:40px;">
+    </div>
+    <div *ngIf="attuneScheduleData?.noData" style="text-align:center; padding: 20px; color: #666;">
+        <p>{{attuneScheduleData.message}}</p>
+    </div>
+    <ng-container *ngIf="attuneScheduleData && !attuneScheduleData.noData">
+    <div class="content_overview">
+        <div class="heading_ques">Test schedule Days <span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.TestScheduleDays}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.TestScheduleDays}}</div>
+    </div>
+    
+   <div class="content_overview">
+        <div class="heading_ques">Test schedule<span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.Testschedulename}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.TestSchedule}}</div>
+    </div>
+    
+    <div class="content_overview" >
+        <div class="heading_ques">Reported on <span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.Reportedon}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.ReportedOn}}</div>
+    </div>
+    
+    <div class="content_overview" *ngIf="isMHLStaff">
+        <div class="heading_ques">Processing Org Name <span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.Processinglocation}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.ProcessingOrgName ? attuneScheduleData.ProcessingOrgName : '-'}}</div>
+    </div>
+
+    <!-- <div class="content_overview" >
+        <div class="heading_ques">Transit Time <span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.TransitTime}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.TransitTime}}</div>
+    </div> -->
+    
+    <div class="content_overview">
+        <div class="heading_ques">Estimated Report TAT <span><img
+                    src="/assets/images/dos/Information icon.png"
+                    tooltip="{{fieldInfo.ReportTAT}}"
+                    [adaptivePosition]="false" placement="right"
+                    class="info_icon_dos" alt=""></span></div>
+        <div class="heading_ans">{{attuneScheduleData.ReportTAT}}</div>
+    </div>
+    
+
+    <!-- <div class="content_overview" *ngIf="!attuneScheduleData?.noData && 
+                                         (!attuneScheduleData?.TestScheduleDays || attuneScheduleData.TestScheduleDays.trim() === '' || attuneScheduleData.TestScheduleDays.trim() === '-') && 
+                                         (!attuneScheduleData?.TestSchedule || attuneScheduleData.TestSchedule.trim() === '' || attuneScheduleData.TestSchedule.trim() === '-') && 
+                                         (!attuneScheduleData?.ReportedOn || attuneScheduleData.ReportedOn.trim() === '' || attuneScheduleData.ReportedOn.trim() === '-') && 
+                                         (!attuneScheduleData?.ProcessingOrgName || attuneScheduleData.ProcessingOrgName.trim() === '' || attuneScheduleData.ProcessingOrgName.toLowerCase().trim() === 'null' || attuneScheduleData.ProcessingOrgName.trim() === '-') && 
+                                         (!attuneScheduleData?.ReportTAT || attuneScheduleData.ReportTAT.trim() === '' || attuneScheduleData.ReportTAT.trim() === '-')">
+        <div class="heading_ans" style="color: #999; font-style: italic;">
+            No schedule and TAT details available
+        </div>
+    </div> -->
+    
+</ng-container>
+</ng-container>
+                                                <!-- <div class="content_overview">
+                                                    <div class="heading_ques">Sample retention <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Sampleretention}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.sampleRetention ?
+                                                        testInfo.sampleRetention : ''}}
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-12">
+                                <section id="Test_Fees">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Category</div>
+                                            <div class="overview-tab-content">
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test fees <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Testfees}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans"> ₹ {{
+                                                        formatTestFees(testInfo.testFees) }}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Category <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Category}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.CategoryName ?
+                                                        testInfo.CategoryName : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Section name <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Sectionname}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.SectionName ?
+                                                        testInfo.SectionName : ''}}</div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Sub section name <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Subsectionname}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.subSectionName ?
+                                                        testInfo.subSectionName : ''}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-12">
+                                <section id="Information">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Clinical Information</div>
+                                            <div class="overview-tab-content">
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Clinical Utility <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.clinicalUtility}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+
+
+                                                    <!-- <div class="heading_ans" *ngFor="let item of clinicalUtilityList">
+                                                        <span class="heading_ques" *ngIf="item"> -</span> {{ item }}
+                                                    </div> -->
+<div class="heading_ans_new" *ngFor="let item of clinicalUtilityList">
+  <span style="display:block;">- {{ item }}</span>
+</div>
+
+
+                                                </div>
+                                                <div class="content_overview mt-2">
+                                                    <div class="heading_ques">Clinical instruction <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Clinicalinstruction}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">{{testInfo.ClinicalUse ?
+                                                        testInfo.ClinicalUse : ''}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                            <div class="col-12">
+                                <section id="Reports" style="height: calc(100vh - 200px);align-items: baseline;">
+                                    <div class="section_div">
+                                        <div class="tab-main">
+                                            <div class="tab-head">Reports</div>
+                                            <div class="overview-tab-content">
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Test report <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Testreports}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <div class="heading_ans">
+                                                        <div class="report_formats">
+                                                          <div class="report_format">
+  <div class="report_format_img">
+    <div style="text-align: center;"> Dummy Report </div>
+
+    <!-- File exists -->
+    <ng-container *ngIf="testInfo.uploadedReportTemplate; else noReportTemplate">
+      
+      <!-- Excel -->
+      <img *ngIf="testInfo.templateExtension === 'xlsx'"
+           src="/assets/images/dos/excel_img.png"
+           (click)="downloadFile(testInfo.uploadedReportTemplate, testInfo.uploadedReportTemplateName)"
+           style="cursor:pointer">
+      
+      <!-- PDF -->
+      <img *ngIf="testInfo.templateExtension === 'pdf'"
+           src="/assets/images/dos/pdf_img.png"
+           (click)="getUploadedTestBrocher(testInfo.uploadedReportTemplate, testInfo.uploadedReportTemplateName, pdf_popup)"
+           style="cursor:pointer">
+      
+      <!-- Word / Other -->
+      <img *ngIf="testInfo.templateExtension !== 'xlsx' && testInfo.templateExtension !== 'pdf'"
+           src="/assets/images/dos/word.png"
+           (click)="downloadFile(testInfo.uploadedReportTemplate, testInfo.uploadedReportTemplateName)"
+           style="cursor:pointer;height:100px">
+    </ng-container>
+
+    <!-- No file -->
+    <ng-template #noReportTemplate>
+      <img src="/assets/images/dos/file-not-avaliable.png"
+           tooltip="No Details Available for Preview"
+           style="cursor:not-allowed">
+    </ng-template>
+
+  </div>
+
+  <div class="report_format_name">
+    {{ testInfo.uploadedReportTemplateName || 'Report Template' }}
+  </div>
+</div>
+
+                                                         <div class="report_format">
+  <div style="text-align: center;"> Brochure </div>
+
+  <div class="report_format_img">
+
+    <!-- Case 1: File exists -->
+    <ng-container *ngIf="testInfo.uploadedTestBrochure; else noBrochureFile">
+
+      <!-- Excel -->
+      <img *ngIf="testInfo.brochureExtension === 'xlsx'"
+           src="/assets/images/dos/excel_img.png"
+           (click)="downloadFile(testInfo.uploadedTestBrochure, testInfo.uploadedTestBrochureName)"
+           style="cursor:pointer">
+
+      <!-- PDF -->
+      <img *ngIf="testInfo.brochureExtension === 'pdf'"
+           src="/assets/images/dos/pdf_img.png"
+           (click)="getUploadedTestBrocher(testInfo.uploadedTestBrochure, testInfo.uploadedTestBrochureName, pdf_popup)"
+           style="cursor:pointer">
+
+      <!-- Word / Other -->
+      <img *ngIf="testInfo.brochureExtension !== 'xlsx' && testInfo.brochureExtension !== 'pdf'"
+           src="/assets/images/dos/word.png"
+           (click)="downloadFile(testInfo.uploadedTestBrochure, testInfo.uploadedTestBrochureName)"
+           style="cursor:pointer;height:100px;">
+    </ng-container>
+
+    <!-- Case 2: No file -->
+    <ng-template #noBrochureFile>
+      <img src="/assets/images/dos/file-not-avaliable.png"
+           tooltip="No Details Available for Preview"
+           style="cursor:not-allowed">
+    </ng-template>
+
+  </div>
+
+  <div class="report_format_name">
+    {{ testInfo.uploadedTestBrochureName || 'Test Brochure' }}
+  </div>
+</div>
+
+                                                            <!-- changes start -->
+<div class="report_format">
+  <div style="text-align: center;"> Test Requisition </div>
+
+  <div class="report_format_img">
+
+    <!-- Case 1: File exists -->
+    <ng-container *ngIf="testInfo.testRequisition; else noTestRequisitionFile">
+
+      <!-- Excel -->
+      <img *ngIf="testInfo.testRequisitionExtension === 'xlsx'"
+           src="/assets/images/dos/excel_img.png"
+           (click)="downloadFile(testInfo.testRequisition, testInfo.testRequisitionName)"
+           style="cursor:pointer">
+
+      <!-- PDF -->
+      <img *ngIf="testInfo.testRequisitionExtension === 'pdf'"
+           src="/assets/images/dos/pdf_img.png"
+           (click)="getUploadedTestBrocher(testInfo.testRequisition, testInfo.testRequisitionName, pdf_popup)"
+           style="cursor:pointer">
+
+      <!-- Word / Other -->
+      <img *ngIf="testInfo.testRequisitionExtension !== 'xlsx' && testInfo.testRequisitionExtension !== 'pdf'"
+           src="/assets/images/dos/word.png"
+           (click)="downloadFile(testInfo.testRequisition, testInfo.testRequisitionName)"
+           style="cursor:pointer;height:100px;">
+    </ng-container>
+
+    <!-- Case 2: No file -->
+    <ng-template #noTestRequisitionFile>
+      <img src="/assets/images/dos/file-not-avaliable.png"
+           tooltip="No Details Available for Preview"
+           style="cursor:not-allowed">
+    </ng-template>
+
+  </div>
+
+  <div class="report_format_name">
+    {{ testInfo.testRequisitionName || 'Test Requisition' }}
+  </div>
+</div>
+
+
+<div class="report_format">
+  <div style="text-align: center;"> Consent Forms </div>
+
+  <div class="report_format_img">
+
+    <!-- Case 1: Consent form exists -->
+    <ng-container *ngIf="testInfo.consentForms; else noConsentFile">
+
+      <!-- Excel -->
+      <img *ngIf="testInfo.consentFormsExtension === 'xlsx'"
+           src="/assets/images/dos/excel_img.png"
+           (click)="downloadFile(testInfo.consentForms, testInfo.consentFormsName)"
+           style="cursor:pointer">
+
+      <!-- PDF -->
+      <img *ngIf="testInfo.consentFormsExtension === 'pdf'"
+           src="/assets/images/dos/pdf_img.png"
+           (click)="getUploadedTestBrocher(testInfo.consentForms, testInfo.consentFormsName, pdf_popup)"
+           style="cursor:pointer">
+
+      <!-- Word -->
+      <img *ngIf="testInfo.consentFormsExtension !== 'xlsx' && testInfo.consentFormsExtension !== 'pdf'"
+           src="/assets/images/dos/word.png"
+           (click)="downloadFile(testInfo.consentForms, testInfo.consentFormsName)"
+           style="cursor:pointer;height:100px;">
+    </ng-container>
+
+    <!-- Case 2: NO Consent Forms -->
+    <ng-template #noConsentFile>
+      <img src="/assets/images/dos/file-not-avaliable.png"
+           tooltip="No Details Available for Preview"
+           style="cursor:not-allowed">
+    </ng-template>
+
+  </div>
+
+  <div class="report_format_name">
+    {{ testInfo.consentFormsName || 'Consent Forms' }}
+  </div>
+</div>
+
+
+
+                                                            <!-- changes end -->
+                                                            <!-- <div class="report_format">
+                                                                <div class="report_format_img">
+                                                                    <img src="/assets/images/dos/Html image.png" alt="">
+                                                                </div>
+                                                                <div class="report_format_name">Report template.html
+                                                                </div>
+                                                            </div> -->
+                                                            <!-- <div class="report_format">
+                                                                <div class="report_format_img">
+                                                                    <img src="/assets/images/dos/Html image.png" alt="">
+                                                                </div>
+                                                                <div class="report_format_name">Test brochure.html</div>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="content_overview">
+                                                    <div class="heading_ques">Last updated on <span><img
+                                                                src="/assets/images/dos/Information icon.png"
+                                                                tooltip="{{fieldInfo.Lastupdatedon}}"
+                                                                [adaptivePosition]="false" placement="right"
+                                                                class="info_icon_dos" alt=""></span></div>
+                                                    <!-- <div class="heading_ans">{{testInfo.testUpdateDate ?
+                                                        testInfo.testUpdateDate : ''}}
+                                                    </div> -->
+                                                    <div class="heading_ans">
+                                                        {{ testInfo.lastUpdatedOn ? testInfo.lastUpdatedOn : (testInfo.testUpdateDate || '') }}
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div>
+                                                    Note:
+                                                    <div class="over_notes">
+                                                        *These files are provided for reference purposes only.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- <tabset class="overview">
+                <tab (selectTab)="tab = 'Overview';onTabChanges()" heading="Overview">
+                    <div class="tab-main">
+                        <div class="tab-head">Test Information</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Test code</div>
+                                <div class="heading_ans">{{testInfo.testCode ? testInfo.testCode : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Test name</div>
+                                <div class="heading_ans">{{testInfo.testName ? testInfo.testName : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Department <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Department}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.departmentName ? testInfo.departmentName : ''}}
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Method <span><img
+                                            src="/assets/images/dos/Information icon.png" tooltip="{{fieldInfo.Method}}"
+                                            [adaptivePosition]="false" placement="right" class="info_icon_dos"
+                                            alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.MethodName ? testInfo.MethodName : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Test parameters (Name) <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo['Testparameters(Name)']}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.testParametersName ? testInfo.testParametersName :
+                                    ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Test parameters (Count) <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo['Testparameters(Count)']}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.testParametersCount}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Report display name <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Reportdisplayname}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.ReportDisplayName ? testInfo.ReportDisplayName :
+                                    ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Alternet Name <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Alternatename}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans"
+                                    *ngIf="testInfo.AlternateName1 == '' && testInfo.AlternateName2 == '' && testInfo.AlternateName3 == ''">
+                                    -
+                                </div>
+                                <div class="heading_ans" *ngIf="testInfo.AlternateName1 != ''">{{testInfo.AlternateName1
+                                    ? testInfo.AlternateName1 :''}}
+                                </div>
+                                <div class="heading_ans" *ngIf="testInfo.AlternateName2 != ''">{{testInfo.AlternateName2
+                                    ? testInfo.AlternateName2 : ''}}
+                                </div>
+                                <div class="heading_ans" *ngIf="testInfo.AlternateName3 != ''">{{testInfo.AlternateName3
+                                    ? testInfo.AlternateName3 : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Published on <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Publishedon}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.publishedOn ? testInfo.publishedOn : ''}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-main mt-3">
+                        <div class="tab-head">Laboratory List</div>
+                        <div class="overview-tab-content list-tab-content">
+                            <div class="content_overview lab_list">
+                                <div class="heading_ques"></div>
+                                <div class="heading_ans">{{testInfo.laboratoryList ? testInfo.laboratoryList : ''}}
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab (selectTab)="tab = 'Sample Guidelines & Forms';onTabChanges()" heading="Sample Guidelines & Forms">
+                    <div class="tab-main">
+                        <div class="tab-head">Sample Information</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Sample container <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Samplecontainer}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans"><img style="width:100px" src="assets/images/dos/container.png"
+                                        alt=""></div>
+                                <div class="heading_ans">{{containerInfo.ContainerName ? containerInfo.ContainerName :
+                                    ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Sample type <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Sampletype}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.SampleType?.length > 0 ?
+                                    testInfo.SampleType[0].SampleType
+                                    : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Sample volume <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Samplevolume}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.SampleVolume ? testInfo.SampleVolume : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Shipping temperature <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Shippingtemparature}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>S 2-8C</th>
+                                                <th>A 25 C</th>
+                                                <th>R28C</th>
+                                                <th>F20C</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{testInfo['S2-8C'] ? testInfo['S2-8C'] : ''}}</td>
+                                                <td>{{testInfo['A25C'] ? testInfo['A25C'] : ''}}</td>
+                                                <td>{{testInfo['R28C'] ? testInfo['R28C'] : ''}}</td>
+                                                <td>{{testInfo['F20C'] ? testInfo['F20C'] : ''}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Rejected, if any <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo['Rejected,ifany']}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Hemolysis</th>
+                                                <th>NA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Icterus</td>
+                                                <td>Reject</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Speicimen stability ingormation <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Specimenstabilityinformation}}"
+                                            [adaptivePosition]="false" placement="right" class="info_icon_dos"
+                                            alt=""></span></div>
+                                <div class="heading_ans">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Speicimen type</th>
+                                                <th>Temperature</th>
+                                                <th>Time</th>
+                                                <th>Speicimen container</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{testInfo.specimenType ? testInfo.specimenType : ''}}</td>
+                                                <td>{{testInfo.temperature ? testInfo.temperature : ''}}</td>
+                                                <td>{{testInfo.Time ? testInfo.Time : ''}}</td>
+                                                <td>{{testInfo.specimenContainer ? testInfo.specimenContainer : ''}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Collection instruction <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Collectioninstruction}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.SampleType?.length > 0 ?
+                                    testInfo.SampleType[0]?.collectionInstruction ?
+                                    testInfo.SampleType[0].collectionInstruction :'-'
+                                    : ''}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-main mt-3">
+                        <div class="tab-head">Forms</div>
+                        <div class="overview-tab-content">
+                            <div class="form_pdf_name">
+                                <span>Test form.pdf</span>
+                                <span><img src="/assets/images/dos/pdf png.png" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab (selectTab)="tab = 'Clinical Information & Resources'" heading="Clinical Information & Resources">
+                    <div class="tab-main">
+                        <div class="tab-head">Clinical Utility</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Clinical instruction <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Clinicalinstruction}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.ClinicalUse ? testInfo.ClinicalUse : ''}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab (selectTab)="tab = 'Reports'" heading="Reports">
+                    <div class="tab-main">
+                        <div class="tab-head">Reports</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Test report <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Testreports}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">
+                                    <div class="report_formats">
+                                        <div class="report_format">
+                                            <div class="report_format_img">
+                                                <a *ngIf="testInfo.uploadedReportTemplate != ''"
+                                                    (click)="downloadFile(testInfo.uploadedReportTemplate, testInfo.uploadedReportTemplateName)">
+                                                    <img src="/assets/images/dos/excel_img.png" alt=""
+                                                        *ngIf="testInfo.templateExtension == 'xlsx'"
+                                                        style="cursor:pointer">
+                                                    <img src="/assets/images/dos/pdf_img.png" alt=""
+                                                        *ngIf="testInfo.templateExtension == 'pdf'"
+                                                        style="cursor:pointer">
+                                                    <img src="/assets/images/dos/word.png" alt=""
+                                                        *ngIf="testInfo.templateExtension != 'xlsx' && testInfo.templateExtension != 'pdf'"
+                                                        style="cursor:pointer;height: 100px;">
+                                                </a>
+
+                                                <img *ngIf="testInfo.uploadedReportTemplate == ''"
+                                                    style="cursor:not-allowed"
+                                                    src="/assets/images/dos/file-not-avaliable.png" alt="">
+                                            </div>
+                                            <div class="report_format_name">{{testInfo.uploadedReportTemplateName ?
+                                                testInfo.uploadedReportTemplateName : 'Report Template'}}</div>
+                                        </div>
+                                        <div class="report_format">
+                                            <div class="report_format_img">
+                                                <a *ngIf="testInfo.uploadedTestBrochure != ''"
+                                                    (click)="downloadFile(testInfo.uploadedTestBrochure, testInfo.uploadedTestBrochureName)">
+                                                    <img src="/assets/images/dos/excel_img.png" alt=""
+                                                        *ngIf="testInfo.brochureExtension == 'xlsx'"
+                                                        style="cursor:pointer">
+                                                    <img src="/assets/images/dos/pdf_img.png" alt=""
+                                                        *ngIf="testInfo.brochureExtension == 'pdf'"
+                                                        style="cursor:pointer">
+                                                    <img src="/assets/images/dos/word.png" alt=""
+                                                        *ngIf="testInfo.brochureExtension != 'xlsx' && testInfo.brochureExtension != 'pdf'"
+                                                        style="cursor:pointer;height: 100px;">
+                                                </a>
+                                                <img *ngIf="testInfo.uploadedTestBrochure == ''"
+                                                    style="cursor:not-allowed"
+                                                    src="/assets/images/dos/file-not-avaliable.png" alt="">
+                                            </div>
+                                            <div class="report_format_name">{{testInfo.uploadedTestBrochureName ?
+                                                testInfo.uploadedTestBrochureName : 'Test Brochure'}}</div>
+                                        </div>
+                                        <div class="report_format">
+                                            <div class="report_format_img">
+                                                <img src="/assets/images/dos/Html image.png" alt="">
+                                            </div>
+                                            <div class="report_format_name">Report template.html</div>
+                                        </div>
+                                        <div class="report_format">
+                                            <div class="report_format_img">
+                                                <img src="/assets/images/dos/Html image.png" alt="">
+                                            </div>
+                                            <div class="report_format_name">Test brochure.html</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Last updated on <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Lastupdatedon}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.testUpdateDate ? testInfo.testUpdateDate : ''}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab (selectTab)="tab = 'Additional information'" heading="Additional information">
+                    <div class="tab-main">
+                        <div class="tab-head">Test Schedule</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Test schedule name <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Testschedulename}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.testSchduleName ? testInfo.testSchduleName : ''}}
+                                </div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Test schedule <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Testschedule}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.testSchdule ? testInfo.testSchdule : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Reported on <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Reportedon}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.ReportedOn ? testInfo.ReportedOn : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Sample retention <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Sampleretention}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.sampleRetention ? testInfo.sampleRetention : ''}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab (selectTab)="tab = 'Category and Test Fees'" heading="Category and Test Fees">
+                    <div class="tab-main">
+                        <div class="tab-head">Category</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="heading_ques">Test fees <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Testfees}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">₹ {{testInfo.testFees ? testInfo.testFees : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Category <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Category}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.CategoryName ? testInfo.CategoryName : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Section name <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Sectionname}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.SectionName ? testInfo.SectionName : ''}}</div>
+                            </div>
+                            <div class="content_overview">
+                                <div class="heading_ques">Sub section name <span><img
+                                            src="/assets/images/dos/Information icon.png"
+                                            tooltip="{{fieldInfo.Subsectionname}}" [adaptivePosition]="false"
+                                            placement="right" class="info_icon_dos" alt=""></span></div>
+                                <div class="heading_ans">{{testInfo.subSectionName ? testInfo.subSectionName : ''}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset> -->
+        </div>
+    </div>
+</div>
+
+
+<ng-template #pdf_popup>
+    <div class="modal-header" style="justify-content: end;"><span class="close_pdf"
+            (click)="modalRef.hide(); closePdf()">X</span></div>
+    <div class="modal-body">
+        <!-- ============ content Start============== -->
+        <div class="row">
+            <div class="col-12">
+                <!-- <object data="https://www.africau.edu/images/default/sample.pdf" style="width: 100%; height: calc(100vh - 128px);"></object> -->
+                <!-- <pdf-viewer src="https://www.africau.edu/images/default/sample.pdf" [render-text]="true" [original-size]="false" style="width: 100%; height: calc(100vh - 128px);"></pdf-viewer> -->
+                <!-- <iframe src="https://www.africau.edu/images/default/sample.pdf" style="height: calc(100vh - 128px);width: 100%;"></iframe> -->
+                <!-- <embed src="https://www.africau.edu/images/default/sample.pdf"  style="height: calc(100vh - 128px);width: 100%;"> -->
+                <!-- <ngx-extended-pdf-viewer [src]="src"
+            [useBrowserLocale]="true"
+            [textLayer]="true"
+            [showHandToolButton]="true"
+            [showPresentationModeButton]="true"
+            [showDownloadButton]="false"
+            [enablePrint] =	"true"
+            [contextMenuAllowed] = "true"
+            [showSidebarButton] = "true"
+            [showBookmarkButton] ="false"
+            [showOpenFileButton] = "false"
+            [showPropertiesButton] = "false"
+            [showPropertiesButton] = "false"
+            [showSpreadButton] = "false"
+          ></ngx-extended-pdf-viewer> -->
+                <div class="pdf_icon_cont">
+                    <div class="pagin_pdf">
+                        <button class="pdf-icons" tooltip="Previous" (click)="prevPage()"><img
+                                src="/assets/images/dos/previous.png" alt=""></button>
+                        <div class="pagenopdf">{{page}} / {{totalPages}}</div>
+                        <button class="pdf-icons" tooltip="Next" (click)="nextPage()"><img
+                                src="/assets/images/dos/nextarrow.png" alt=""></button>
+                    </div>
+                    <div class="pagin_pdfbut">
+                        <button class="pdf-icons" tooltip="Zoom in" (click)="zoomin()"><img
+                                src="/assets/images/dos/zoomin.png" alt=""></button>
+                        <button class="pdf-icons" tooltip="Zoom out" (click)="zoomout()"><img
+                                src="/assets/images/dos/zoomout.png" alt=""></button>
+                        <button class="pdf-icons" tooltip="Rotate Clockwise" (click)="rotateClockwise()"><img
+                                src="/assets/images/dos/right.png" alt=""></button>
+                        <button class="pdf-icons" tooltip="Rotate AntiClockwise" (click)="rotateCounterClockwise()"><img
+                                src="/assets/images/dos/left.png" alt=""></button>
+                    </div>
+                    <button class="pdf-icons" tooltip="Download" (click)="downloadFile()"><img
+                            src="/assets/images/dos/download.png" alt=""></button>
+                </div>
+
+
+            </div>
+            <pdf-viewer #pdfViewer [src]="src" [rotation]="rotation" [original-size]="false" [show-all]="true"
+                [fit-to-page]="false" [page]="page" [zoom]="zoom" [zoom-scale]="'page-width'" [stick-to-page]="false"
+                [render-text]="true" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+                style="height: 600px;" (after-load-complete)="afterLoadComplete($event)"></pdf-viewer>
+
+        </div>
+    </div>
+
+
+</ng-template>

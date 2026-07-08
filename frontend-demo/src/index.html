@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MHL Product Catalogs</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="./assets/images/metrologonew.png">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="HandheldFriendly" content="true" />
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1976d2">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/72x72.png">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/72x72.png">
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/icons/57x57.png" />
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/icons/114x114.png" />
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/icons/72x72.png" />
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/icons/144x144.png" />
+<link rel="apple-touch-icon-precomposed" sizes="60x60" href="assets/icons/60x60.png" />
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="assets/icons/120x120.png" />
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="assets/icons/76x76.png" />
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="assets/icons/152x152.png" />
+<link rel="icon" type="image/png" href="assets/icons/196x196.png" sizes="196x196" />
+<link rel="icon" type="image/png" href="assets/icons/96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="assets/icons/32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+<link rel="icon" type="image/png" href="assets/icons/128x128.png" sizes="128x128" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bynature">
+<meta name="application-name" content="&nbsp;"/>
+<meta name="msapplication-TileColor" content="#00aba9">
+<meta name="msapplication-TileImage" content="assets/icons/144x144.png" />
+<meta name="msapplication-square70x70logo" content="assets/icons/70x70.png" />
+<meta name="msapplication-square150x150logo" content="assets/icons/150x150.png" />
+<meta name="msapplication-wide310x150logo" content="assets/icons/310x150.png" />
+<meta name="msapplication-square310x310logo" content="assets/icons/310x310.png" />
+<link rel="mask-icon" href="images/icons/safari-pinned-tab.svg" color="#6F6F6F">
+<meta name="msapplication-TileColor" content="#00aba9">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.4.0/css/flag-icon.min.css" integrity="sha256-NkXMfPcpoih3/xWDcrJcAX78pHpfwxkhNj0bAf8AMTs=" crossorigin="anonymous"/>
+</head>
+<body>
+  <app-root></app-root>
+   <script>
+  //   // Disable right-click context menu
+  document.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+  });
+ 
+  
+    document.addEventListener('keydown', function (e) {
+         if (e.key === 'F12' || e.keyCode === 123) {
+          e.preventDefault();
+  }
+});
+    
+ 
+  //    // Disable Ctrl+Shift+I
+    window.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) {
+          alert('Developer tools are not allowed.');
+      e.preventDefault();
+      }
+       });
+ 
+   window.addEventListener('devtoolschange', function (event) {
+    if (event.detail.open) {
+     alert('Developer tools are not allowed.');
+      e.preventDefault();
+    }
+   });
+ 
+ 
+   if (window.console) {
+  var originalConsole = window.console;
+console.log(window);
+   window.console = {
+log: function () {},
+info: function () {},
+error: function () {}
+/// Add other console functions as needed
+  };
+
+  
+}
+ 
+  </script> 
+</body>
+</html>

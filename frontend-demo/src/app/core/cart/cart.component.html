@@ -1,0 +1,648 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="content-panel">
+    <div class="row">
+        <div class="col-12">
+            <div class="map">
+                <div class="map_element" [routerLink]="'/'" (click)="navigateToHomeScreen()" style="cursor: pointer;">
+                    Home</div>
+                <div class="map_element">Cart</div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 mt-3">
+                    <div class="themeinput cart_search_input">
+                        <input type="text" class="form-control" placeholder="Cart Search" id="cart_table_search">
+                        <span class="cart_search_input_icon"><img src="/assets/images/dos/Search grey.png"
+                                alt=""></span>
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 mt-3">
+                    <div class="sharediv">
+                        <div class="sharing-img">
+                            <!-- <img *ngIf="addedCartItems.length > 0"
+                                src="/assets/images/dos/Whatsapp image.png" alt=""> -->
+                            <!-- <img
+                                *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                src="/assets/images/dos/Whatsapp-dis.png" alt=""> -->
+                            <img style="cursor: not-allowed;" src="/assets/images/dos/Whatsapp-dis.png" alt="">
+                        </div>
+                        <div class="sharing-img" (click)="smsCatalogCartPdf()"><img *ngIf="addedCartItems.length > 0"
+                                src="/assets/images/dos/Message image.png" alt=""><img
+                                *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                src="/assets/images/dos/Message-dis.png" alt=""></div>
+                        <div class="sharing-img">
+                            <!-- <img *ngIf="addedCartItems.length > 0"
+                                src="/assets/images/dos/Email image.png" alt="" (click)="mailCatalogCartPdf()"> -->
+                            <!-- <img *ngIf="addedCartItems.length == 0"
+                                style="cursor: not-allowed;" src="/assets/images/dos/email-dis.png" alt=""> -->
+
+                            <img style="cursor: not-allowed;" src="/assets/images/dos/email-dis.png" alt="">
+                        </div>
+                        <div class="sharing-img">
+                            <img *ngIf="addedCartItems?.length > 0 && userType !=3" src="/assets/images/dos/pdf_img.png"
+                                (click)="getOtp(otp_popup,'lg','pdf')" alt="">
+                            <img *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                src="/assets/images/dos/pdf-dis.png" alt="">
+                            <img *ngIf="addedCartItems?.length > 0 && userType==3" src="/assets/images/dos/pdf_img.png"
+                                (click)="downloadPdfFile()" alt="">
+                        </div>
+                        <!-- <div class="sharing-img"><img *ngIf="addedCartItems.length > 0 && userType==3"
+                                    src="/assets/images/dos/pdf_img.png" (click)="getOtp(otp_popup,'lg','pdf')" alt=""><img
+                                    *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                    src="/assets/images/dos/pdf-dis.png" alt=""></div> -->
+                        <div  *ngIf=" userType!=3" class="sharing-img">
+                            <img *ngIf="addedCartItems?.length > 0 && userType!=3"
+                                src="/assets/images/dos/Excel image-1.png" (click)="getOtp(otp_popup,'lg','excel')"
+                                alt="">
+                            <img *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                src="/assets/images/dos/excel-dis.png" alt="">
+                            <img *ngIf="addedCartItems?.length > 0 && userType==3 "
+                                src="/assets/images/dos/Excel image-1.png" (click)="exportCartData()" alt="">
+                        </div>
+                        <!-- <div class="sharing-img"><img *ngIf="addedCartItems.length > 0 && userType==3 "
+                                    src="/assets/images/dos/Excel image-1.png"  (click)="exportCartData()"  alt=""><img
+                                    *ngIf="addedCartItems?.length == 0" style="cursor: not-allowed;"
+                                    src="/assets/images/dos/excel-dis.png" alt=""></div> -->
+                        <div class="continue-btn"
+                            [ngClass]="addedCartItems?.length > 0 ? 'cartcontinue' : 'cartcontinue_disabled'"
+                            (click)="addedCartItems?.length > 0 ? insertUpdateTestCartDetails() : ''">
+                            Save Cart
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- downloadPdfFile(); -->
+        <!-- (click)="exportCartData()" -->
+        <div class="col-12">
+            <div class="row">
+                <div class="col-12 mt-3">
+                    <div class="cart-div">
+                        <div class="cart-table">
+                            <table *ngIf="showTable" class="table responsive-table" id="cart_table"
+                                style="padding:0 !important;" datatable [dtOptions]="cart_table">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            style="text-align: center;padding-left: 10px !important;min-width:95px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Test Code</th>
+                                        <th class="hide_data"
+                                            style="text-align: left;min-width: 150px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Test Name</th>
+                                        <th class="hide_data"
+                                            style="text-align: left;min-width: 100px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Method</th>
+                                        <th class="hide_data"
+                                            style="text-align: left;min-width: 125px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Sample Type</th>
+                                        <th class="hide_data"
+                                            style="text-align: left;min-width: 170px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Test Schedule Days</th>
+                                        <!-- <th class="hide_data"
+                                            style="text-align: left;min-width:85px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Report TAT</th> -->
+                                            <th class="hide_data"
+                                            style="text-align: center;min-width:205px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Report TAT <br>(as per Time of addition)</th>
+   <!-- <th class="hide_data"
+    style="text-align: center;min-width:205px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;"
+    [innerHTML]="attuneFlag ? 'Report TAT <br> (as per Time of addition)' : 'Reported On'">
+</th> -->
+                                        <th class="hide_data"
+                                            style="text-align: left;min-width:160px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Time of addition</th>
+                                        <th class=""
+                                            style="text-align: center;min-width:143px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Fasting Required ?</th>
+                                        <th class=""
+                                            style="text-align: center;min-width:82px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Walkin ?</th>
+                                        <th class=""
+                                            style="text-align: center;min-width:120px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">
+                                            Mandatory Requirement</th>
+                                        <th class=""
+                                            style="text-align: right;min-width: 190px;min-width:78px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important; ">
+                                            Price</th>
+                                        <!-- <th style="text-align: left;">Quantity</th> -->
+                                        <!-- <th style="text-align: right;width:190px;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;">Total</th> -->
+
+
+                                        <th
+                                            style="text-align: center;font-family: 'Poppins_Bold' !important;border-bottom: 1px solid #479096 !important;width:80px">
+
+                                            <!-- <button style="width:77px" class="clear_btn"  [disabled]="addedCartItems.length==0 ? true :false" (click)="removeAll(RemoveAll_Cart,'md' ,addedCartItems,1)" >Clear All</button> -->
+
+
+                                            <img *ngIf="addedCartItems?.length==0" src="/assets/images/dos/Trash.png"
+                                                title="Remove All" alt=""
+                                                style="width:24px;" [style.filter]="addedCartItems?.length === 0 ? 'invert(60%) sepia(9%) saturate(0%) hue-rotate(261deg) brightness(101%) contrast(90%)' : 'none'">
+                                            <img *ngIf="addedCartItems?.length>0"
+                                                (click)="removeAll(RemoveAll_Cart,'md' ,addedCartItems,1)"
+                                                src="/assets/images/dos/Trash.png" style="cursor:pointer" title="Remove All" alt="">
+
+
+
+
+                                        </th>
+                                        <!-- <th></th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of addedCartItems">
+                                        <td class="dt-control"
+                                            style="text-align: center;padding-left: 14px !important;">
+                                            <div>{{item.testCode}}</div>
+                                        </td>
+                                        <td style="text-align: left;" class="td-link hide_data"
+                                            (click)="navigateToOverview(item)">{{item.testName}}</td>
+
+                                        <td style="text-align: left;" class="hide_data">
+                                            <div>{{item.MethodName !='null' ? item.MethodName : '-'}}</div>
+
+                                        </td>
+                                        <td style="text-align: left;" class="hide_data">
+                                            {{item.SampleType !='null' ?
+                                            item.SampleType :'-' }}</td>
+                                        <td style="text-align: left;" class="hide_data"> {{item.ScheduleDays ?
+                                            item.ScheduleDays :'-' }} </td>
+                                        <!-- <td style="text-align: left;" class="hide_data">{{item.ReportedOn ?
+                                            item.ReportedOn :'-'}}</td> -->
+                                            <td style="text-align: center;" class="hide_data">{{item.ReportTAT ?
+                                            item.ReportTAT :'-'}}</td>
+                                            <!-- <td style="text-align: center;" class="hide_data">
+    {{ attuneFlag ? (item.ReportTAT ? item.ReportTAT : '-') : (item.ReportedOn ? item.ReportedOn : '-') }}
+</td> -->
+<!-- <td style="text-align: center;">
+    {{ item.reportTAT ? item.reportTAT : '-' }}
+</td> -->
+                                        <td style="text-align: left;" class="hide_data">
+  {{item.timeOfAddition ? item.timeOfAddition : '-'}}
+</td>
+                                        <td style="text-align: center;" class="">
+                                            <div *ngIf="item?.FastingRequired?.toLowerCase().trim()==='yes'">
+                                                <img src="/assets/images/dos/YES.png" alt="Yes" style="height:33px" />
+                                            </div>
+                                            <div *ngIf="item?.FastingRequired?.toLowerCase().trim()==='no'">
+                                                <img src="/assets/images/dos/Cancel red.png" alt="No" />
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center;" class="">
+
+                                            <div *ngIf="item?.WalkinTest?.toLowerCase().trim()==='yes'">
+                                                <img src="/assets/images/dos/YES.png" alt="Yes" style="height:33px" />
+                                            </div>
+                                            <div *ngIf="item?.WalkinTest?.toLowerCase().trim()==='no'">
+                                                <img src="/assets/images/dos/Cancel red.png" alt="No" />
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center;">
+
+
+                                            <div *ngIf="item.clinicalUtility != '' || item.ClinicalUse != '' "
+                                                style="cursor:pointer !important">
+                                                <img src="/assets/images/dos/Information icon.png" alt="Info"
+                                                    (click)="info_pop(info_popup,'lg',item)"
+                                                    style="cursor:pointer !important" />
+                                            </div>
+
+                                            <div *ngIf="item.clinicalUtility == '' && item.ClinicalUse == ''  "
+                                                style="cursor:pointer !important">
+                                                <img src="/assets/images/dos/Cancel red.png" alt="Info"
+                                                    (click)="info_pop(info_popup,'lg',item)"
+                                                    style="cursor:pointer !important" />
+                                            </div>
+
+                                        </td>
+
+
+                                        <!-- <td class="hide_data" style="text-align: right;"> <span
+                                                *ngIf="item.testFees != '0.0'">₹</span>{{item.testFees != '0.0' ?
+                                            formatTestFees(item.testFees) : '' | number : '1.2-2'}}</td> -->
+
+                                        <td class="" style="text-align: right;">
+                                            <span *ngIf="item.testFees != '0.0'">₹</span>
+                                            {{ formatTestFees(item.testFees) }}
+                                            <!-- {{ item.testFees != '0.0' ? (item.testFees | number : '1.2-2') : '' }} -->
+                                        </td>
+
+                                        <!-- <td style="text-align: left;"><div class="quantity"><button (click)="decrementQuantity(item)">-</button><span>{{item.quantity}}</span><button (click)="incrementQuantity(item)">+</button></div></td> -->
+                                        <!-- <td style="text-align: right;"><span
+                                                *ngIf="item.total != '0.0'">₹</span>{{item.total ?
+                                            formatTestFees(item.total) : '' | number : '1.2-2'}}</td> -->
+                                        <!-- 
+                                            <td style="text-align: right;">
+                                                <span *ngIf="item.total != '0.0'">₹</span>
+                                                {{ item.total ? (item.total | number : '1.2-2') : '' }}
+                                              </td> -->
+                                        <td style="text-align: center;">
+                                            <div class="cart_cancel" style="cursor: pointer;"><img
+                                                    src="/assets/images/dos/Trash.png" alt=""
+                                                    (click)="remove(Remove_Cart,'md' ,item)" title="Remove"></div>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                            <!-- <img  *ngIf="addedCartItems.length == 0" src="/assets/images/cart_no_item.gif"> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="summary">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td class="" style="width:205px;"></td>
+                                    <td class="tot" style="font-family: 'Poppins_Bold' !important;">Total</td>
+                                    <td class="hide_data" style="width: 125px;"></td>
+                                    <td class="hide_data" style="width: 200px;"></td>
+                                    <td class="hide_data" style="width: 125px;"></td>
+                                    <td style="min-width: 190px;text-align: right;font-family: 'Poppins_Bold' !important;"
+                                        colspan="2">
+                                        <!-- <span *ngIf="getTotalPrice() !=0">₹ {{getTotalPrice() | number :
+                            '1.2-2'}}</span> -->
+                                        <span *ngIf="getTotalPrice() != 0">₹ {{ getTotalPrice() | number: '1.0-0'
+                                            }}</span>
+                                    </td>
+                                    <td class="emt"></td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- <div class="col-12 mt-3">
+                    <div class="summary">
+                         <div class="summ_tiltle">Summary</div> -->
+                    <!-- <div class="summ-total">
+                            <div class="totat">Total</div>
+                            <div class="total-price"><span *ngIf="getTotalPrice() !=0">₹ {{getTotalPrice() | number :
+                                    '1.2-2'}}</span></div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+                </div>
+            </div>
+        </div>
+        
+
+
+        <!-- test reecommed start -->
+        <div *ngIf="addedCartItems?.length > 0">
+         <div class="related_title mt-3 " *ngIf="test_recommendations?.length > 0">Additional Test Often Recommended
+                by doctors</div>
+            <div class="rcc_pos">
+                <div class="mb-3 mt-3" *ngFor="let test of test_recommendations">
+                    <div class="single_test">
+                        <div class="single_custom">
+                         
+                            <div class="test_name" title="{{test.product_name}}" routerLinkActive="active"
+                                (click)="navigateToOverviewByTestRecom(test)">
+                                {{test.product_name}} </div>
+                         
+
+                            <div class="test_name_bdr"></div>
+                            <div class="reason_bac" title="{{test.reason}}"><div class="reason_pos"> {{test.reason}} </div></div>
+
+                            <div class="test_rec">
+                                <div class="cartandtotal">
+                                    <div class="total">
+
+                                        ₹ {{test.testFees != '0.0' ? test.testFees : ''}}
+                                    </div>
+                                    <div class="cart_hov">
+                                        <div [ngClass]="{add_cart: !test.isAdded, added_cart:test.isAdded, add_dis_cart:test.isActive == 'N'}"
+                                            (click)="addToCart1(test)">
+                                            {{ test.isAdded ? 'Added' : 'Add to cart' }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="related_title mt-3 " *ngIf="package_recommendations?.length > 0"> Package Recommendation
+            </div>
+            <div class="rcc_pos">
+                <div class="mb-3 mt-3" *ngFor="let pack of package_recommendations">
+                    <div class="single_test">
+                        <div class="single_custom">
+                            <div class="test_name" title="{{pack.product_name}}" routerLinkActive="active">
+                                {{pack.product_name}} </div>
+                            <div style="display: flex;gap:10px" class="tooltip_cus">
+                                <div tooltip=" {{pack.test_parameters}}" style="cursor:pointer;display: flex;gap: 5px;">
+                                    <div class="t_bld"> {{pack.no_of_test}} </div> Profiles
+                                </div> |<div tooltip=" {{pack.included_parameters}}"
+                                    style="cursor:pointer;display: flex;gap: 5px;">
+
+                                    <div class="t_bld">
+                                        {{pack.parameter}} </div>
+                                    <div>Parameters</div>
+                                    <div style="width:10px"></div>
+                                </div>
+                            </div>
+                            <div class="test_name_bdr"></div>
+                            <div class="reason_bac">
+
+                                <div class="reason_pos" title="{{pack.reason}}"> {{pack.reason}} </div>
+                            </div>
+                            <div class="pack_rec">
+                                <div class="cartandtotal">
+                                 
+                                    <div class="total">
+                                        ₹ {{ pack.testFees && pack.testFees !== '0.0' ? pack.testFees : '0' }}
+                                    </div>
+
+                                    <div class="cart_hov">
+                                        <div [ngClass]="{add_cart: !pack.isAdded, added_cart:pack.isAdded, add_dis_cart:pack.isActive === 'N'}"
+                                            (click)="addToCart2(pack)">
+                                            {{ pack.isAdded ? 'Added' : 'Add to cart' }}
+                                        </div>
+                                    </div>
+
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3" Packages>
+                <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                    <div class="related_title" *ngIf="cartItems?.length">
+                        Related Packages
+                    </div>
+                </div>
+                <div class="col-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6" *ngIf="cartItems?.length >= 6">
+                    <div class="view_more" (click)="viewMore()" *ngIf="!isView">
+                        View More >>
+                    </div>
+                    <div class="view_more" (click)="viewLess()" *ngIf="isView">
+                        View Less >>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-xxl-2 mt-3" *ngFor="let item of cartItems">
+                            <div class="single_test">
+                                <div class="test_name" title="{{item.testName}}" (click)="navigateToOverview(item)"
+                                    routerLinkActive="active">{{item.testName}}</div>
+                                <div class="publishon">Published on : {{item.publishedOn}}</div>
+                                <div class="cartandtotal">
+                                    <div class="total">
+                                        ₹ {{item.testFees != '0.0' ? item.testFees : ''}}
+                                    </div>
+                                    <div [ngClass]="{add_cart: !item.isAdded, added_cart:item.isAdded}"
+                                        (click)="addToCart(item)">
+                                        {{ item.isAdded ? 'Added' : 'Add to cart' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div> 
+<!-- test reecommed end -->
+
+
+
+
+
+
+    </div>
+
+
+    <!-- <div class="add_cart" *ngIf="!item.isAdded" (click)="addToCart(item)">
+                                        Add to cart
+                                    </div>
+                                    <div class="added_cart" *ngIf="item.isAdded">
+                                        Added
+                                    </div> -->
+
+    <ng-template #Remove_Cart>
+        <div class="modal-header">
+            <div class="pull-left log_out_title">
+                <div class="modal_title">Are you sure, Do you want to remove this item from cart?</div>
+            </div>
+            <!-- <button type="button"
+        class="modal_close"
+        (click)="closeModal()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true" class="">&times;</span>
+      </button> -->
+        </div>
+        <div class="modal-body">
+            <!-- ============ content Start============== -->
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="text-end logout">
+                        <button class="btn lifebtn-outline" type="button" (click)="modalRef.hide()">Cancel</button>
+                        <button class="btn lifebtn-primary ml-3" type="submit" (click)="removeFromCart()">Yes</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #RemoveAll_Cart>
+        <div class="modal-header">
+            <div class="pull-left log_out_title">
+                <div class="modal_title">Are you sure, Do you want to remove all item from cart?</div>
+            </div>
+            <!-- <button type="button"
+        class="modal_close"
+        (click)="closeModal()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true" class="">&times;</span>
+      </button> -->
+        </div>
+        <div class="modal-body">
+            <!-- ============ content Start============== -->
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="text-end logout">
+                        <button class="btn lifebtn-outline" type="button" (click)="modalRef.hide()"
+                            (click)="closeCart()">Cancel</button>
+                        <button class="btn lifebtn-primary ml-3" type="submit" (click)="removeFromCart()">Yes</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+
+    <ng-template #otp_popup>
+        <div class="modal-header" (click)="cancelOtp()">
+            <div class="modal_title"></div>
+            <div class="modal-close">&times;</div>
+        </div>
+        <div class="modal-body">
+            <div class="login_contain">
+                <div class="left_img_signup">
+                    <img src="/assets/images/dos/Sign in page.png" style="width: 100%;max-width: 300px;" alt="">
+                </div>
+                <div class="login_form" style="width: 50%;">
+                    <div class="login_head">OTP</div>
+                    <div class="themeinput">
+                        <label for="ng-otp">Enter OTP</label>
+                        <div class="otp_login">
+                            <ng-otp-input class="" [config]="{length:6, allowNumbersOnly:true,isPasswordInput:true}"
+                                (onInputChange)="onOtpChange($event)" (keydown.enter)="VerifyOTP()" id="ng-otp"></ng-otp-input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <div class="resend_otp">
+                                <!-- <div class="timer_sec">{{otpSec}} Sec</div> -->
+                                <!-- OTP Countdown -->
+                                <div class="timer_sec" *ngIf="!showResendButton">
+                                    <countdown [config]="config" (event)="handleEvent($event)"></countdown>
+                                    &nbsp;<span>Minutes</span>
+
+                                </div>
+                                <!-- <div class="resend_btn">Resend OTP</div> -->
+                                <!-- resend button -->
+                                <div *ngIf="showResendButton">
+                                    <span><a class="resend_btn" style="cursor: pointer;" (click)="resendOtp()">Resend
+                                            OTP</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-login" [ngClass]="{ 'btn-submit_disable': otpValue?.length < 6 }"
+                                [disabled]="otpValue.length < 6" (click)="VerifyOTP()">Continue</button>
+                        </div>
+
+                        <!-- (click)="VerifyOTPLogin()" -->
+                        <!-- <div class="col-12">
+                  <div class="label_login"  >Already have an account?
+                    <span class="sign_up_btn" (click)="clearForm()" (click)="openModal(signup_popup,'xl')">Sign in</span>
+                  </div>
+                </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <!-- info popup -->
+    
+    <ng-template #info_popup>
+        <div class="modal-header" style="background-color: #ecfaff;">
+            <div class="pull-left log_out_title">
+                <div class="modal_title">Mandatory Requirement</div>
+            </div>
+            <div class="modal-close" style="font-size:24px" (click)="modalRef.hide()">&times;</div>
+
+
+        </div>
+        <div class="modal-body">
+            <!-- ============ content Start============== -->
+            <div class="info_sub_title">Clinical Utility </div>
+            <div *ngFor="let item of infoItem">
+                <div class="info_flx">
+                    <div class="info_mar">-</div>
+                    <div class="li_mar">
+                        {{item}}</div>
+                </div>
+            </div>
+            <div class="info_sub_title mt-3">Clinical instruction</div>
+            <div *ngFor="let item of infoItem_clinc">
+                <div class="info_flx">
+                    <div class="info_mar">-</div>
+                    <div class="li_mar">
+                        {{item}}</div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+
+    <ng-template #package_replace>
+        <div class="modal-header">
+            <div class="pull-left log_out_title">
+                <div class="modal_title">
+                    <div class="packge_info_title">
+                        Since you have added
+                        <span class="pack_title_head" style="margin-right:5px">{{ packageName}}</span>to cart which
+                        contains
+                        <span class="pack_title_head"
+                            *ngFor="let product of productCodeChechForPopUp">{{product.testName}} </span>we have removed
+                        these from your cart.
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button"
+        class="modal_close"
+        (click)="closeModal()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true" class="">&times;</span>
+      </button> -->
+        </div>
+        <div class="modal-body">
+            <!-- ============ content Start============== -->
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="text-end logout">
+                        <button class="btn lifebtn-outline" type="button" (click)="modalRef.hide()">Cancel</button>
+                        <button class="btn lifebtn-primary ml-3" type="submit"
+                            (click)="packageRecomAdded()">Yes</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <!-- test recommedation popup -->
+    <ng-template #test_recommedation>
+        <div class="modal-header">
+            <div class="pull-left log_out_title">
+                <div class="modal_title">
+                    <div class="packge_info_title">
+                        <span class="pack_title_head" style="margin-right:5px">{{ recommendedTestName}}</span> is added
+                        to cart
+                    </div>
+                </div>
+            </div>
+            <!-- <button type="button"
+        class="modal_close"
+        (click)="closeModal()"
+        aria-label="Close"
+      > 
+        <span aria-hidden="true" class="">&times;</span>
+      </button> -->
+        </div>
+        <div class="modal-body">
+            <!-- ============ content Start============== -->
+            <div class="row mt-3">
+                <div class="col-lg-12">
+                    <div class="text-end logout">
+                        <button class="btn lifebtn-outline" type="button" (click)="modalRef.hide()">Cancel</button>
+                        <button class="btn lifebtn-primary ml-3" type="submit" (click)="testRecomAdded()">Yes</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>

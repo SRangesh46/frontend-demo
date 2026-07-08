@@ -1,0 +1,90 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="content-panel">
+    <div class="row">
+        <div class="col-12">
+            <div class="map">
+                <div class="map_element" style="cursor: pointer;" [routerLink]="''">Home</div>
+                <div class="map_element">Sample Collection Manual</div>
+            </div>
+        </div>
+    </div>
+    <div class="row page_heading select_input">
+        <div class="col-12">
+            <div class="">Sample Collection Manual</div>
+        </div>
+    </div>
+    <div class="row mt-3" >
+        <div class="col-12" >
+            <div class="sources_div_col" >
+                <div class="row" >
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 col-xxl-2 sources_document_div_col" *ngFor="let sample of pdfList"  style="cursor: pointer;"  style="cursor: pointer;" 
+                       >
+                        <div><img class="pdf_image_consent" src="/assets/images/dos/pdf image-1.png" alt="" (click)="open_pdf(pdf_popup, sample)">
+                        </div>
+                        <div  (click)="open_pdf(pdf_popup, sample)" class="pdf_download_link">{{sample.title}}</div>
+                        <div><img src="/assets/images/dos/Download blue.png" alt=""  (click)="downloadPdf(sample)"></div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #pdf_popup>
+    <div class="modal-header" style="justify-content: end;"><span class="close_pdf" (click)="modalRef.hide();closePdf()">X</span></div>    
+    <div class="modal-body">
+      <!-- ============ content Start============== -->
+      <div class="row">
+        <div class="col-12">
+            <!-- <object data="https://www.africau.edu/images/default/sample.pdf" style="width: 100%; height: calc(100vh - 128px);"></object> -->
+            <!-- <pdf-viewer src="https://www.africau.edu/images/default/sample.pdf" [render-text]="true" [original-size]="false" style="width: 100%; height: calc(100vh - 128px);"></pdf-viewer> -->
+          <!-- <iframe src="https://www.africau.edu/images/default/sample.pdf" style="height: calc(100vh - 128px);width: 100%;"></iframe> -->
+          <!-- <embed src="https://www.africau.edu/images/default/sample.pdf"  style="height: calc(100vh - 128px);width: 100%;"> -->
+            <!-- <ngx-extended-pdf-viewer [src]="src"
+            [useBrowserLocale]="true"
+            [textLayer]="true"
+            [showHandToolButton]="true"
+            [showPresentationModeButton]="true"
+            [showDownloadButton]="false"
+            [enablePrint] =	"true"
+            [contextMenuAllowed] = "true"
+            [showSidebarButton] = "true"
+            [showBookmarkButton] ="false"
+            [showOpenFileButton] = "false"
+            [showPropertiesButton] = "false"
+            [showPropertiesButton] = "false"
+            [showSpreadButton] = "false"
+          ></ngx-extended-pdf-viewer> -->
+          <div class="pdf_icon_cont">
+            <div class="pagin_pdf">
+              <button class="pdf-icons" tooltip="Previous" (click)="prevPage()"><img src="/assets/images/dos/previous.png"
+                  alt=""></button>
+                  <div class="pagenopdf">{{page}} / {{totalPages}}</div>
+              <button class="pdf-icons" tooltip="Next" (click)="nextPage()"><img src="/assets/images/dos/nextarrow.png"
+                  alt=""></button>
+            </div>
+            <div class="pagin_pdfbut">
+              <button class="pdf-icons" tooltip="Zoom in" (click)="zoomin()"><img src="/assets/images/dos/zoomin.png"
+                alt=""></button>
+            <button class="pdf-icons" tooltip="Zoom out" (click)="zoomout()"><img src="/assets/images/dos/zoomout.png"
+                alt=""></button>
+            <button class="pdf-icons" tooltip="Rotate Clockwise" (click)="rotateClockwise()"><img
+                src="/assets/images/dos/right.png" alt=""></button>
+            <button class="pdf-icons" tooltip="Rotate AntiClockwise" (click)="rotateCounterClockwise()"><img
+                src="/assets/images/dos/left.png" alt=""></button>
+            </div>
+  
+  
+          </div>
+          <pdf-viewer #pdfViewer [src]="src"  [rotation]="rotation" [original-size]="false" [show-all]="true"
+            [fit-to-page]="false" [page]="page" [zoom]="zoom" [zoom-scale]="'page-width'" [stick-to-page]="false"
+            [render-text]="true" [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+            style="height: 600px;" (after-load-complete)="afterLoadComplete($event)"></pdf-viewer>
+     
+        </div>
+      </div>
+    </div>
+  </ng-template>

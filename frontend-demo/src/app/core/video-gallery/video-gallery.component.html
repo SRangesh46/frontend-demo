@@ -1,0 +1,257 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<!-- Main Content -->
+<!-- <div class="main-container">
+  <div class="page-title">DOS 2.0 Video Library</div>
+</div> -->
+
+<!-- Filter Bar -->
+ <div class="filter-bar">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6 mt-3">
+         <div class="gallery-controls">
+  <button 
+    class="control-btn" 
+    [class.active]="selectedFilter === 'most-viewed'" 
+    (click)="setFilter('most-viewed')">
+    <span><img src="/assets/images/dos/View_eye.png" alt="" style="height: 24px;"></span> Most Viewed
+  </button>
+
+  <button 
+    class="control-btn" 
+    [class.active]="selectedFilter === 'latest'" 
+    (click)="setFilter('latest')">
+    <span><img src="/assets/images/dos/Latest_update.png" alt="" style="height: 24px;"></span> Latest Videos
+  </button>
+
+  <button 
+    class="control-btn" 
+    [class.active]="selectedFilter === 'all-videos'" 
+    (click)="setFilter('all-videos')">
+    <span><img src="/assets/images/dos/All_videos.png" alt="" style="height: 24px;"></span> All Videos
+  </button>
+</div>
+
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 col-xxl-6 mt-4">
+ <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-12 col-xxl-9 mt-2">
+<form [formGroup]="testForm">
+  <div class="row" *ngIf="showDropdowns">
+    <!-- Category Dropdown -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-6 col-xxl-5 mt-2 ">
+      <div class="filter-row">
+        <div class="themeinput">
+          <p-dropdown
+            optionLabel="category"
+            optionValue="catId"
+            [options]="getVideoCategoryList"
+            formControlName="selectedCategory"
+            placeholder="--Select Category--"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="category"
+            [resetFilterOnHide]="true"
+            [lazy]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disease Dropdown -->
+    <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-6 col-xxl-5 mt-2">
+      <div class="filter-row">
+        <div class="themeinput">
+          <p-dropdown
+            optionLabel="videoDisease"
+            optionValue="disId"
+            [options]="getDiseaseCategoryList"
+            formControlName="selectedDisease"
+            placeholder="--Select Disease--"
+            [showClear]="true"
+            [filter]="true"
+            filterBy="videoDisease"
+            [resetFilterOnHide]="true"
+            [lazy]="true">
+          </p-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-12 col-xxl-3 mt-3">
+    <div class="city_ip">
+<div  class="themeinput" style="position: relative;">
+    <span  class="search_icon_dos_table"><img  src="/assets/images/dos/Search grey.png" alt="" style="height: 16px;"></span>
+<input
+  type="text"
+  id="placehold"
+  placeholder="Search Videos..."
+  class="form-control"
+  [(ngModel)]="searchText"
+/>
+    
+</div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 🔥 Most Viewed -->
+<!-- <div class="section-header mt-3">
+  <div class="section-title">🔥 Most Viewed</div>
+  <button class="view-all-btn" *ngIf="filteredMostViewed.length > 8" (click)="toggleMostViewed()">
+    {{ showAllMostViewed ? 'Show Less' : 'View All' }}
+  </button>
+</div> -->
+
+<div class="video-grid" *ngIf="selectedFilter === 'most-viewed'">
+  <!-- <button class="view-all-btn" *ngIf="filteredMostViewed.length > 8" (click)="toggleMostViewed()">
+    {{ showAllMostViewed ? 'Show Less' : 'View All' }}
+  </button> -->
+  <div class="row">
+    <ng-container *ngIf="filteredMostViewed.length > 0; else noMostViewed">
+      <!-- <ng-container *ngFor="let video of (showAllMostViewed ? filteredMostViewed : filteredMostViewed.slice(0, 8))"> -->
+      <ng-container *ngFor="let video of filteredMostViewed">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 mt-2">
+          <div class="video-card">
+            <div class="video-thumbnail">
+              <video
+                class="video-player"
+                controls
+                controlsList="nodownload"
+                [src]="video.videoGalleryUrl"
+                (play)="onPlay($event, video)"
+                (loadedmetadata)="onMetadataLoaded($event, video)"
+                (timeupdate)="onTimeUpdate($event, video)">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-info">
+              <div class="video-title" title="{{ video.videoGallery }}">{{ video.videoGallery }}</div>
+              <div class="video-meta">
+                <div class="video-views">
+                  <!-- <span>👁 {{ video.displayViewCount || extractViewNumber(video.viewCount) }} Views</span> -->
+                  <span>👁 {{  video.viewCount }} </span>
+                </div>
+                <div class="video-date">{{ video.timeElapsed }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noMostViewed>
+      <div class="col-12 text-center text-muted mt-3">No Videos</div>
+    </ng-template>
+  </div>
+</div>
+
+
+<!-- 🆕 Latest Upload -->
+<!-- <div class="section-header mt-4">
+  <div class="section-title">🆕 Latest Upload</div>
+  <button class="view-all-btn" *ngIf="filteredLatestVideos.length > 8" (click)="toggleLatest()">
+    {{ showAllLatest ? 'Show Less' : 'View All' }}
+  </button>
+</div> -->
+
+<div class="video-grid" *ngIf="selectedFilter === 'latest'">
+   <!-- <button class="view-all-btn" *ngIf="filteredLatestVideos.length > 8" (click)="toggleLatest()">
+    {{ showAllLatest ? 'Show Less' : 'View All' }}
+  </button> -->
+  <div class="row">
+    <ng-container *ngIf="filteredLatestVideos.length > 0; else noLatest">
+      <!-- <ng-container *ngFor="let video of (showAllLatest ? filteredLatestVideos : filteredLatestVideos.slice(0, 8))"> -->
+      <ng-container *ngFor="let video of filteredLatestVideos">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 mt-2">
+          <div class="video-card">
+            <div class="video-thumbnail">
+              <video
+                class="video-player"
+                controls
+                controlsList="nodownload"
+                [src]="video.videoGalleryUrl"
+                (play)="onPlay($event, video)"
+                (loadedmetadata)="onMetadataLoaded($event, video)"
+                (timeupdate)="onTimeUpdate($event, video)">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-info">
+              <div class="video-title" title="{{ video.videoGallery }}">{{ video.videoGallery }}</div>
+              <div class="video-meta">
+                <div class="video-views">
+                  <!-- <span>👁 {{ video.displayViewCount || extractViewNumber(video.viewCount) }} Views</span> -->
+                  <span>👁 {{video.viewCount }}</span>
+                </div>
+                <div class="video-date">{{ video.timeElapsed }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noLatest>
+      <div class="col-12 text-center text-muted mt-3">No Videos</div>
+    </ng-template>
+  </div>
+</div>
+
+
+<!-- 📹 All Videos -->
+<!-- <div class="section-header mt-4">
+  <div class="section-title">📹 All Videos</div>
+  <button class="view-all-btn" *ngIf="filteredAllVideos.length > 8" (click)="toggleAllVideos()">
+    {{ showAllVideos ? 'Show Less' : 'Load More' }}
+  </button>
+</div> -->
+
+<div class="video-grid"  *ngIf="selectedFilter === 'all-videos'">
+    <!-- <button class="view-all-btn" *ngIf="filteredAllVideos.length > 8" (click)="toggleAllVideos()">
+    {{ showAllVideos ? 'Show Less' : 'Load More' }}
+  </button> -->
+  <div class="row">
+    <ng-container *ngIf="filteredAllVideos.length > 0; else noAllVideos">
+      <!-- <ng-container *ngFor="let video of (showAllVideos ? filteredAllVideos : filteredAllVideos.slice(0, 8))"> -->
+      <ng-container *ngFor="let video of filteredAllVideos">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 col-xxl-3 mt-2">
+          <div class="video-card">
+            <div class="video-thumbnail">
+              <video
+                class="video-player"
+                controls
+                controlsList="nodownload"
+                [src]="video.videoGalleryUrl"
+                (play)="onPlay($event, video)"
+                (loadedmetadata)="onMetadataLoaded($event, video)"
+                (timeupdate)="onTimeUpdate($event, video)">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="video-info">
+              <div class="video-title" title="{{ video.videoGallery }}">{{ video.videoGallery }}</div>
+              <div class="video-meta">
+                <div class="video-views">
+                  <!-- <span>👁 {{ video.displayViewCount || extractViewNumber(video.viewCount) }} Views</span> -->
+                  <span>👁 {{video.viewCount }} </span>
+                </div>
+                <div class="video-date">{{ video.timeElapsed }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noAllVideos>
+      <div class="col-12 text-center text-muted mt-3">No Videos</div>
+    </ng-template>
+  </div>
+</div>
+

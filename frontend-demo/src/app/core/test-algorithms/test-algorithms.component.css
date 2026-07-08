@@ -1,0 +1,5 @@
+.disabled {
+  color: gray;  /* or any other styles to visually indicate the disabled state */
+  pointer-events: none;  /* to disable click events */
+  background-color: rgb(232, 232, 232);
+}

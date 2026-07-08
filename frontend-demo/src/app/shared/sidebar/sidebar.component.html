@@ -1,0 +1,161 @@
+<aside class="sidebar-sec">
+  <div class="sidebar-scroll">
+    <!-- <ul class="sidebar-menu">
+      <li (mouseover)="ssddropdown('Catalog')" (mouseleave)="ssddropdown_leave('Catalog')"
+        class="main-menu THRESHOLD ssddropdown Catalog">
+        <a class="main-menu-link" routerLinkActive="active"><span class="arrowupdown">Test Catalog</span></a>
+        <div class="sub-menu menu-child ssddropdown-content " style="width:660px !important">
+          <div class="row mt-3" style="width: 100%;margin:0;">
+          
+            <div class="col-12 col-col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <div class="group">
+                <div class="group_topic">Test Information</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/new-test">New
+                  Tests</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/updated-test">
+                  Updated Tests</div>
+              </div>
+              <div class="group">
+                <div class="group_topic">Package Information</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/new-package">
+                  New Packages</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/updated-package">Updated Packages
+                </div>
+              </div>
+              <div class="group">
+                <div class="group_topic">Popular</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/popular-test">Popular Test</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/popular-package">Popular Package</div>
+              </div>
+              <div class="group">
+                <div class="group_topic">Diseases</div>
+                <div class="group_element" routerLinkActive="active" routerLink="/diseases">Diseases</div>
+              </div>
+            </div>
+            <div class="col-12 col-col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+              <div class="group">
+                <div class="group_topic">Doctor Speciality</div>
+                <div class="group_element" *ngFor="let item of doctorspecialityList" routerLinkActive="active" (click)="navigateToDoctorSpecialityTesting(item)" >{{item.doctorSpecialityName}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li (mouseover)="ssddropdown('Speciality')" (mouseleave)="ssddropdown_leave('Speciality')"
+        class="main-menu THRESHOLD ssddropdown Speciality">
+        <a class="main-menu-link" routerLinkActive="active"><span class="arrowupdown">Speciality Segment</span></a>
+        <div class="sub-menu menu-child ssddropdown-content speciality_dropdown">
+          <div class="themeinput" style="position: relative;margin:5px !important;">
+            
+                
+                <p-autoComplete [(ngModel)]="selectedItem" (input)="filterSuggestions($event)"/>
+            <span class="search_icon_dos" style="cursor:pointer;top: 8px !important;right: auto;left: 6px;" (click)="getSpecialityOnEnter($event)"><img
+                    style="cursor:pointer" src="/assets/images/dos/Search grey.png" alt=""></span>
+                 
+                
+        </div>
+          <div class="group">
+            <div *ngIf="showNoDataMessage" style="font-size: 14px; margin-left: 30px; color: #495057;">No results found</div>
+            <div class="group_element" *ngFor="let item of filteredSuggestions" routerLinkActive="active"  routerLink="/speciality-testing" (click)="navigateToSpecialityTesting(item)" >{{item.SpecialityName}}</div>
+          </div>
+        </div>
+   
+      <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/test-requisition-and-consent-forms"><span>Test
+            Requisition & Consent Forms</span></a>
+      </li>
+      <li (mouseover)="ssddropdown('FAQ')" (mouseleave)="ssddropdown_leave('FAQ')"
+        class="main-menu THRESHOLD ssddropdown FAQ">
+        <a class="main-menu-link" routerLinkActive="active"><span class="arrowupdown">FAQ's</span></a>
+        <div class="sub-menu menu-child ssddropdown-content ">
+          <div class="group">
+            <div class="group_element" routerLinkActive="active" routerLink="/faq">FAQ's</div>
+          
+          </div>
+        </div>
+      </li>
+    
+    </ul> -->
+
+
+    <ul class="sidebar-menu">
+      
+      <li (mouseover)="ssddropdown('Catalog')" (mouseleave)="ssddropdown_leave('Catalog')" (click)="toggleDropdown('Catalog')"
+          class="main-menu THRESHOLD ssddropdown Catalog">
+          <div  >
+        <a class="main-menu-link1" routerLinkActive="active"  routerLink="{{routerlink}}">
+          <span class="arrowupdown">Test Catalog</span>
+        </a>
+        <div class="sub-menu menu-child ssddropdown-content " style="width:300px !important">
+          <div class="row mt-3" style="margin:0;">
+            <div class="group">
+              <div class="group_topic">Test Information</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/new-test" (click)="routerLink('/new-test')">New Tests</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/updated-test" (click)="routerLink('/updated-test')">Updated Tests</div>
+            </div>
+            <div class="group">
+              <div class="group_topic">Package Information</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/new-package" (click)="routerLink('/new-package')">New Packages</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/updated-package" (click)="routerLink('/updated-package')">Updated Packages</div>
+            </div>
+            <div class="group">
+              <div class="group_topic">Popular</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/popular-test" (click)="routerLink('/popular-test')">Popular Test</div>
+              <div class="group_element" routerLinkActive="active" routerLink="/popular-package" (click)="routerLink('/popular-package')">Popular Package</div>
+            </div>
+          </div>
+        </div>
+          </div>
+      </li>
+    
+      <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/speciality-testing">
+          <span>Speciality Segment</span>
+        </a>
+      </li>
+      
+     
+      
+      <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/diseases">
+          <span>Disease Condition</span>
+        </a>
+      </li>
+      
+      <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/doctor-speciality">
+          <span>Doctor Speciality</span>
+        </a>
+      </li>
+       <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/test-requisition-and-consent-forms">
+          <span>Test Requisition & Consent Forms</span>
+        </a>
+      </li>
+       <li class="main-menu has-collapsible THRESHOLD">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/video-gallery">
+          <span>Video Gallery</span>
+        </a>
+      </li>
+      <li (mouseover)="ssddropdown('FAQ')" (mouseleave)="ssddropdown_leave('FAQ')"
+          class="main-menu THRESHOLD ssddropdown FAQ">
+        <a class="main-menu-link" routerLinkActive="active" routerLink="/faq">
+          <span class="arrowupdown">FAQ's</span>
+        </a>
+        <div class="sub-menu ssddropdown-content">
+          <div class="group">
+            <div class="group_element" routerLinkActive="active" routerLink="/faq">FAQ's</div>
+          </div>
+        </div>
+      </li>
+
+  <li class="main-menu has-collapsible THRESHOLD current-time-li">
+  <a class="main-menu-link current-time-link">
+    <!-- <span class="current-label-text">DD MMM YYYY HH:MM:SS</span> -->
+    <span class="current-time-text">{{ currentTime }}</span>
+  </a>
+</li>
+
+    </ul>
+  </div>
+</aside>

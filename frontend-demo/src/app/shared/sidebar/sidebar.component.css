@@ -1,0 +1,252 @@
+.max-img{
+  width:120px;
+}
+
+
+.max_mg{
+  width:120px;
+  margin: auto;
+}
+
+.mini_mg{
+  width:32px;
+  margin: auto;
+
+}
+
+
+.sidelogoss{
+height: 50px;
+}
+
+
+ .sidebar-sec{
+/*background-color: #fff;
+position: fixed;
+top:0px;
+bottom: 0;
+height: 100vh;
+width: 240px;
+transform: translate3d(-100%, 0, 0); */
+transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+padding: 20px 0px 0px 0px;
+/*text-transform: uppercase;*/
+border-top-right-radius: 30px;
+
+} 
+
+
+
+.sidebar-scroll {
+  margin-top: 60px;
+}
+
+
+/* ul.sidebar-menu li {
+  font-family: calibri_bold;
+} */
+
+ul.sidebar-menu li ul li{
+  border-left: 1px solid #ccc;
+}
+
+/* .sidebar-menu{
+  height: calc(100vh - 279px);
+  overflow-y: auto;
+} */
+
+.sidebar-menu{
+  height: 62px;
+  overflow-y: auto;
+  background: #fff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 3px 10px #8F8F8F29;
+
+}
+
+.sidebar-menu,
+.sub-menu{
+padding: 0px 10px;
+margin: 0px 0px 0px 0px;
+}
+.sidebar-menu .main-menu,
+.sub-menu li{
+list-style: none;
+display: inline-block;
+}
+.sidebar-menu .main-menu a{
+cursor: pointer;
+padding: 10px 10px;
+color: #000000;
+font-size: 14px;
+display: block;
+position: relative;
+text-decoration: none;
+}
+.sidebar-menu .main-menu a.active { color: #00984A }
+
+/* .sidebar-menu .main-menu a.active:after{
+    position: absolute;
+    right: 0px;
+        top: 20px;
+    content: '\f054 ';
+    font-family: 'FontAwesome';
+    border-radius: 20px;
+    font-size: 9px;
+    width: 15px;
+    color: #fff;
+    text-align: center;
+    height: 15px;
+    line-height: 16px;
+    letter-spacing: -1px;
+    background-color: #9E2575;
+} */
+
+
+.sidebar-menu .main-menu a.active {
+  background: #EFDEED00!important;
+  border-radius: 10px;
+}
+
+.mini-sidebar .sidebar-menu .main-menu a.active:after{
+    top: 12px;
+    font-size: 8px;
+    width: 12px;
+    height: 12px;
+    line-height: 13px;
+}
+.sidebar-menu .main-menu a i{
+    padding-right: 8px;
+    font-size: 16px;
+}
+.sub-menu{
+    display: none;
+    padding: 0px 0px 0px 0px !important;
+    transition: all 0.35s ease;
+}
+.has-collapsible.active .sub-menu{
+    display: block;
+    position: fixed;
+    background: #fff;
+}
+
+.foot-text{
+    background-color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    color:#b7b7b7;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 240px;
+    text-align: center;
+}
+
+.userlogs {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: #F5F5F5;
+  border-radius: 6px;
+}
+
+.user_names{
+  display: flex;
+  justify-content: space-between;
+}
+
+.user_name_data {
+  font-size: 14px;
+  font-family: calibri_bold;
+  text-indent: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 150px;
+  text-align: left;
+  line-height: 23px;
+  text-transform: none;
+  color: #b7b7b7;
+}
+
+.fcon.powerby {
+  font-size: 11px;
+  font-family: calibri;
+  text-align: center;
+  text-transform: none;
+  color:#909090;
+}
+
+.footcontent_data {
+  border-top: 1px solid #EAEAEA;
+  margin-top: 14px;
+  padding-top: 10px;
+}
+
+.user_stand img{
+  cursor: pointer;
+}
+
+
+@media (max-width: 991px) {
+  .sidebar-scroll {
+    margin-top: 70px;
+    height: calc(100vh - 90px);
+}
+
+
+.sidebar-menu {
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+}
+
+.life-sidebar {
+  margin: inherit !important;
+}
+
+.life-sidebar {
+  width: inherit !important;
+  margin: inherit !important;
+  border-top-right-radius: 30px;
+}
+
+.has-collapsible.active .sub-menu {
+  display: block;
+  position: relative !important;
+  padding: 5px 0 5px 0 !important;
+  margin: 0 !important;
+  border-radius: 5px !important;
+}
+
+}
+
+
+
+.current-time-li {
+  pointer-events: none;
+  float: right;
+}
+
+.current-time-link {
+  color: #00984A !important;
+  font-size: 13px !important;
+  font-weight: bold;
+  padding: 10px 10px !important;
+  white-space: nowrap;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end;
+  line-height: 1.6;
+}
+
+.current-label-text {
+  color: #888;
+  font-size: 11px !important;
+  font-weight: normal;
+}
+
+.current-time-text {
+  color: #00984A;
+  font-size: 13px !important;
+}

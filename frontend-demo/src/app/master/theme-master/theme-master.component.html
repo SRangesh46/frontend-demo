@@ -1,0 +1,297 @@
+<div class="content-panel">
+  <div class="content-header head_act">
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-2 col-xl-2">
+          <div class="head-title">
+            <div class="head-text">Theme Master</div>
+            <!-- <span>Diagnostics</span> -->
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="common-tabs">
+        <tabset class="member-tabset">
+          <tab heading="View">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="receive-tab">
+                <table
+                    id="receivesample-received"
+                    class="table table-striped table-bordered"
+                    datatable
+                    [dtOptions]="Received"
+                  >
+                    <thead>
+                      <tr>
+                        <th style="text-align: center; width: 60px">#</th>
+                        <th style="min-width: 120px">CRM ID</th>
+                        <th style="min-width: 120px">KIT BOX ID</th>
+                        <th style="min-width: 150px">Client Name</th>
+                        <th style="min-width: 150px">Paramedic Name</th>
+                        <th style="min-width: 120px">Pickup type</th>
+                        <th style="min-width: 140px; text-align: center">
+                          Pickup Time
+                        </th>
+                        <th style="min-width: 140px; text-align: center">
+                          Received Time
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="text-align: center">1</td>
+                        <td>12345678</td>
+                        <td>43456843</td>
+                        <td>Kushboo J</td>
+                        <td>Hariharan</td>
+                        <td>Pickup only</td>
+                        <td style="text-align: center">
+                          <span>28-09-2021</span><span>11:33</span>
+                        </td>
+                        <td style="text-align: center">
+                          <span>28-09-2021</span><span>13:13</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+              </div>
+            </div>
+          </div>
+          </tab>
+          <tab heading="Add">
+            <div class="content-header head_act">
+              <form
+                class="login-form"
+                [formGroup]="themeMasterForm"
+                (ngSubmit)="addNewTheme()"
+              >
+                <div class="row">
+
+
+                  <div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+                    <div class="lifedate">
+                      <input
+                        type="text"
+                        placeholder="Color ID"
+                        class="form-control"
+                        formControlName="Colorid"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+                    <div class="lifedate">
+                      <input
+                        type="text"
+                        placeholder="Color Name"
+                        class="form-control"
+                        formControlName="Colorname"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-2 col-xl-2">
+                    <div class="lifedate">
+                      <input
+                        type="text"
+                        placeholder="Color Code"
+                        class="form-control"
+                        formControlName="ColorCode"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-12 col-lg-1 col-xl-1">
+                    <button class="btn lifebtn-primary mt-1">Add New</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="receive-tab">
+                  <table
+                  id="receivesample-receive"
+                  class="table table-striped table-bordered"
+                  datatable
+                  [dtOptions]="Receive"
+                >
+                  <thead>
+                    <tr>
+                      <th style="text-align: center; width: 60px">#</th>
+                      <th style="min-width: 160px">Color ID</th>
+                      <th style="min-width: 140px">Color Name</th>
+                      <th style="min-width: 140px">Color Code</th>
+                      <th style="min-width: 140px">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let color of colordetails; index as i">
+                      <td style="text-align: center">{{ i + 1 }}</td>
+                      <td> <span *ngIf="!isEditing" class="line-item-field">{{ color.Colorid }}</span>
+                      <input
+                        class="spa-invoice-input"
+                        type="text"
+                        container="body"
+                        *ngIf="isEditing"
+                        [(ngModel)]="color.Colorid"
+                      /></td>
+                      <td>
+                        <span *ngIf="!isEditing" class="line-item-field">{{ color.Colorname }}</span>
+                      <input
+                        class="spa-invoice-input"
+                        type="text"
+                        container="body"
+                        *ngIf="isEditing"
+                        [(ngModel)]="color.Colorname"
+                      /></td>
+                      <td><span *ngIf="!isEditing" class="line-item-field">{{ color.ColorCode }}</span>
+                        <input
+                          class="spa-invoice-input"
+                          type="text"
+                          container="body"
+                          *ngIf="isEditing"
+                          [(ngModel)]="color.ColorCode"
+                        /></td>
+                      <td>
+                        <div class="table_fa">
+                          <span
+                            ><i *ngIf="!isEditing"
+                              class="fa fa-pencil-square-o v_align_m editfa"
+                              (click)="editData( i,color)"
+                            ></i>
+                            <i *ngIf="isCheck"
+                            class="fa fa-check"
+                              (click)="saveData($event, i, color)"
+                            ></i></span
+                          ><span
+                            ><i
+                              class="fa fa-trash"
+                              (click)="removeItemByIndex(color)"
+                            ></i
+                          ></span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== Modal pop up Start=================================== -->
+
+<div
+  bsModal
+  #crmlist_pop="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="dialog-sizes-name1"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="pull-left">
+          <div class="modal_title">CRM ID list</div>
+          <div class="pop_small_head">Rehman Hospitals</div>
+        </div>
+        <button
+          type="button"
+          class="modal_close"
+          (click)="crmlist_pop.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true" class="">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- ============ content Start============== -->
+        <div class="row">
+          <div class="col-md-12">
+            <table
+              id="crm_id_list_fix"
+              class="table table-striped table-bordered"
+              datatable
+              [dtOptions]="crm_id_list"
+            >
+              <thead>
+                <tr>
+                  <th style="text-align: center; width: 60px">#</th>
+                  <th style="min-width: 120px">CRM ID</th>
+                  <th style="min-width: 120px">Client Name</th>
+                  <th style="min-width: 150px">Client Type</th>
+                  <th style="min-width: 150px">Paramedic Name</th>
+                  <th style="min-width: 120px">Pickup type</th>
+                  <th style="min-width: 140px">Pickup Time</th>
+                  <th style="min-width: 100px">
+                    Select all
+                    <!-- <span>
+                      <p-checkbox
+                        name="outline"
+                        outline="true"
+                        shape="round"
+                        color="tpink"
+                      >
+                        <i p-icon class="fa fa-check"></i>
+                      </p-checkbox>
+                    </span> -->
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align: center">1</td>
+                  <td>
+                    <span>12345678</span
+                    ><span class="small_preview pull-right"
+                      ><i class="fa fa-eye"></i
+                    ></span>
+                  </td>
+                  <td>Rehman Hospitals</td>
+                  <td>MOU</td>
+                  <td>Hariharan</td>
+                  <td>Pickup only</td>
+                  <td style="text-align: center">
+                    <span>28-09-2021</span><span>11:33</span>
+                  </td>
+                  <td style="text-align: center" class="">
+                    <!-- <p-checkbox
+                      name="outline"
+                      outline="true"
+                      shape="round"
+                      color="tpink"
+                    >
+                      <i p-icon class="fa fa-check"></i>
+                    </p-checkbox> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="text-right-right">
+              <button (click)="crmlist_pop.hide()" class="btn lifebtn-outline">
+                Close
+              </button>
+              <button class="btn lifebtn-primary ml-3">Receive</button>
+            </div>
+          </div>
+        </div>
+        <!-- ============ content END ============== -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================Modal popup END ================================= -->

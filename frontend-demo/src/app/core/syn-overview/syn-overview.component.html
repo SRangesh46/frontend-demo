@@ -1,0 +1,81 @@
+<div class="content-panel">
+    <div class="row">
+        <div class="col-12">
+            <div class="map">
+                <div class="map_element" routerLink="" style="cursor: pointer;">Home</div>
+                <div *ngIf="!isDisease" class="map_element" (click)="redirectToSymptoms()" style="cursor: pointer;">Symptoms</div>
+                <div *ngIf="!isDisease" class="map_element">{{overviewDetails.SymptomsName}}</div>
+                <div *ngIf="isDisease" class="map_element" (click)="redirectToDisease()" style="cursor: pointer;">Diseases</div>
+                <div *ngIf="isDisease" class="map_element">{{overviewDetails.DiseaseName}}</div>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <tabset class="overview overviews">
+                <tab heading="Definition">
+                    <div class="tab-main">
+                        <div class="tab-head">Definition</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="content_overview_paragraph">
+                                    <div>{{overviewDetails.definition}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Causes">
+                    <div class="tab-main">
+                        <div class="tab-head">Causes</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="content_overview_paragraph">
+                                    <div>{{overviewDetails.causes}} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-main">
+                        <div class="tab-head">Lifestyle factor</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="content_overview_paragraph">
+                                    <div *ngIf="overviewDetails?.lifeStyleFactor?.length > 0">
+                                        {{overviewDetails.lifeStyleFactor[0].lifeStyleTitle}}</div>
+                                    <div *ngFor="let data of overviewDetails.lifeStyleFactor">{{data.lifeStyleFactor}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-main">
+                        <div class="tab-head">Conditions</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="content_overview_paragraph">
+                                    <div *ngIf="overviewDetails?.conditions?.length > 0">
+                                        {{overviewDetails.conditions[0].conditionstitle}}</div>
+                                    <div *ngFor="let data of overviewDetails.conditions">{{data.conditions}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="When to see a doctor">
+                    <div class="tab-main">
+                        <div class="tab-head">When to see a doctor</div>
+                        <div class="overview-tab-content">
+                            <div class="content_overview">
+                                <div class="content_overview_paragraph">
+                                    <div *ngIf="overviewDetails?.whenToSeeADoctor?.length > 0">
+                                        {{overviewDetails.whenToSeeADoctor[0].whentodiseaseTitle}}</div>
+                                    <div *ngFor="let data of overviewDetails.whenToSeeADoctor">{{data.whenToSeeADoctor}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+</div>

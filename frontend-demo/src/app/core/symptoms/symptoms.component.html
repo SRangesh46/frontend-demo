@@ -1,0 +1,76 @@
+<div *ngIf="isLoading" class="overlay">
+    <img src="../../../assets/images/loader.gif" alt="" class="spinner">
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="ma_sympp">
+            <div class="map_element" routerLink="" style="cursor: pointer;">Home</div>
+            <div class="map_element">Symptoms</div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="key_bac">
+                    <div class="input-chip">
+                        <div class="themeinput" style="position: relative;">
+                            <input type="text" class="form-control" id="chipset" style="padding-right: 40px;"
+                                autocomplete="off" [disabled]="isSubmitting" (input)="searchedValue($event)"
+                                (keydown.enter)="getSumptomsOnEnter($event)" maxlength="200"
+                                [(ngModel)]="search_content" (keypress)="keypress($event)">
+                            <span class="search_icon_dos" style="cursor:pointer"
+                                (click)="getSumptomsOnEnter($event)"><img style="cursor:pointer"
+                                    src="/assets/images/dos/Search grey.png" alt=""></span>
+                        </div>
+                        <div class="label"><label class="popuar_search">Popular search :</label>
+                            <div>
+                                <ul id="list" *ngFor="let item of popularSearchtItems;let i as index">
+                                    <li *ngIf="item.keyword != ''">
+                                        <span class="chip-name" style="cursor: pointer;"
+                                            (click)="selectedPopularKey(item)">{{item.keyword}}</span>
+                                            <!-- <a
+                                            class="remove-chip" (click)="remove(i)">X</a> -->
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="keyboard">
+                        <div class="alphabets" (click)="alphabets(lette,$event)" *ngFor="let lette of letter">{{lette}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <div class="search_content">Search results :<span class="results ml-2">
+                                {{searchedWords}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <div class="total_download">
+                            <div class="total_count">
+                                <span>{{symptomsDetails.length}}</span><span class="ml-2">Item</span>
+                            </div>
+                            <!-- <div class="download_icon_search">
+                                <img src="/assets/images/dos/Download icon.png" alt="" style="cursor: pointer;"
+                                    (click)="exportData()">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-3">
+                <ul class="test_search_ul">
+                    <li *ngFor="let data of symptomsDetails" (click)="navigateToOverviews(data)">{{data.SymptomsName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
