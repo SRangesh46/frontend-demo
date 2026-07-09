@@ -45,3 +45,15 @@ POC
 ## tests
 
 ## webhook triger
+
+Last login: Thu Jul  9 10:13:41 2026 from 125.20.236.134
+[ec2-user@ip-10-0-1-95 ~]$ df -h
+Filesystem        Size  Used Avail Use% Mounted on
+devtmpfs          918M     0  918M   0% /dev
+tmpfs             955M     0  955M   0% /dev/shm
+tmpfs             382M  484K  382M   1% /run
+efivarfs          128K  2.7K  121K   3% /sys/firmware/efi/efivars
+/dev/nvme0n1p1    8.0G  4.0G  4.0G  51% /
+tmpfs             955M  4.8M  950M   1% /tmp
+/dev/nvme0n1p128   10M  1.3M  8.7M  13% /boot/efi
+tmpfs             191M     0  191M   0% /run/user/1000
