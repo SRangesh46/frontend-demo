@@ -14,9 +14,19 @@ pipeline {
             }
         }
 
+        stage('Debug') {
+            steps {
+                sh '''
+                pwd
+                ls -la
+                find . -name Dockerfile
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t frontend -f frontend-demo/Dockerfile frontend'
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
 
@@ -33,9 +43,9 @@ pipeline {
             steps {
                 sh '''
                 docker run -d \
-                --name $CONTAINER_NAME \
-                -p 8081:80 \
-                $IMAGE_NAME
+                  --name $CONTAINER_NAME \
+                  -p 8081:80 \
+                  $IMAGE_NAME
                 '''
             }
         }
