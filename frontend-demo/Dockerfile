@@ -1,4 +1,4 @@
-# some changes in docker for testing purpose 
+# some changes in docker for testing purpose to build
 FROM node:18 AS build
 
 WORKDIR /app
