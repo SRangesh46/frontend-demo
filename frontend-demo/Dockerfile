@@ -14,10 +14,9 @@ COPY . .
 
 RUN npm run build -- --configuration production
 
-FROM nginx:alpine
+FROM nginx:1.28-alpine
 
 COPY --from=build /app/dist/MHL_DOS_CATALOGUE_FRONTEND /usr/share/nginx/html
-
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
