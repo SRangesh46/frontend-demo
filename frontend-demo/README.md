@@ -66,3 +66,12 @@ efivarfs          128K  2.7K  121K   3% /sys/firmware/efi/efivars
 tmpfs             955M  4.8M  950M   1% /tmp
 /dev/nvme0n1p128   10M  1.3M  8.7M  13% /boot/efi
 tmpfs             191M     0  191M   0% /run/user/1000
+
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+  
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
