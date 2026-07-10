@@ -2,8 +2,10 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "frontend"
-        CONTAINER_NAME = "frontend-container"
+        AWS_REGION = 'us-east-1'
+        ACCOUNT_ID = '786830914319'
+        IMAGE_NAME = 'frontend-jenkins-repo'
+        REPOSITORY = "786830914319.dkr.ecr.us-east-1.amazonaws.com/frontend-jenkins-repo"
     }
 
     stages {
@@ -14,17 +16,7 @@ pipeline {
             }
         }
 
-        stage('Debug') {
-            steps {
-                sh '''
-                pwd
-                ls -la
-                find . -name Dockerfile
-                '''
-            }
-        }
-
-        stage('Build Docker Image') {
+   stage('Build Docker Image') {
             steps {
                 dir('frontend-demo') {
                     sh 'docker build -t $IMAGE_NAME .'
@@ -32,22 +24,43 @@ pipeline {
             }
         }
 
-        stage('Stop Old Container') {
+        stage('Login to ECR') {
             steps {
                 sh '''
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
+                aws ecr get-login-password --region $AWS_REGION | \
+                docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
                 '''
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Tag Image') {
+            steps {
+                sh 'docker tag $IMAGE_NAME:latest $REPOSITORY:latest'
+            }
+        }
+
+        stage('Push Image to ECR') {
+            steps {
+                sh 'docker push $REPOSITORY:latest'
+            }
+        }
+
+        stage('Pull Image from ECR') {
+            steps {
+                sh 'docker pull $REPOSITORY:latest'
+            }
+        }
+
+        stage('Deploy') {
             steps {
                 sh '''
+                docker stop frontend || true
+                docker rm frontend || true
+
                 docker run -d \
-                  --name $CONTAINER_NAME \
-                  -p 8081:80 \
-                  $IMAGE_NAME
+                --name frontend \
+                -p 8081:80 \
+                $REPOSITORY:latest
                 '''
             }
         }
