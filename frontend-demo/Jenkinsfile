@@ -34,7 +34,7 @@ pipeline {
             steps {
 
                 dir('frontend-demo') {
-                    
+
 
                       sh 'npm install --legacy-peer-deps'
 
@@ -67,11 +67,14 @@ pipeline {
 
                 dir('frontend-demo') {
 
-                    withSonarQubeEnv('SonarQube') {
+                            sh '''
 
-                        sh 'sonar-scanner'
+                           sonar-scanner \
+                           -Dsonar.host.url=http://32.198.38.45:9000 \
+                           -Dsonar.token=squ_a5bf82426790c2d5364c51210fb45dcbb83a5d43
 
-                    }
+                           '''
+
 
                 }
 
