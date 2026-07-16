@@ -66,6 +66,8 @@ pipeline {
             steps {
 
                 dir('frontend-demo') {
+                        withSonarQubeEnv('SonarQube'){
+
 
                             sh '''
 
@@ -74,7 +76,7 @@ pipeline {
                            -Dsonar.token=squ_a5bf82426790c2d5364c51210fb45dcbb83a5d43
 
                            '''
-
+                        }
 
                 }
 
