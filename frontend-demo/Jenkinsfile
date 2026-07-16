@@ -1,68 +1,165 @@
 pipeline {
+
     agent any
 
+    tools {
+        sonarQubeScanner 'SonarScanner'
+    }
+
     environment {
+
         AWS_REGION = 'us-east-1'
+
         ACCOUNT_ID = '786830914319'
+
         IMAGE_NAME = 'frontend-jenkins-repo'
-        REPOSITORY = "786830914319.dkr.ecr.us-east-1.amazonaws.com/frontend-jenkins-repo"
+
+        REPOSITORY = '786830914319.dkr.ecr.us-east-1.amazonaws.com/frontend-jenkins-repo'
+
     }
 
     stages {
 
         stage('Checkout') {
+
             steps {
+
                 checkout scm
+
             }
+
         }
 
-   stage('Build Docker Image') {
+
+        stage('Install Dependencies') {
+
             steps {
+
                 dir('frontend-demo') {
-                    sh 'docker build -t $IMAGE_NAME .'
+
+                    sh 'npm install'
+
                 }
+
             }
+
         }
 
-        stage('Login to ECR') {
+
+        stage('Build Application') {
+
             steps {
+
+                dir('frontend-demo') {
+
+                    sh 'npm run build'
+
+                }
+
+            }
+
+        }
+
+
+        stage('SonarQube Analysis') {
+
+            steps {
+
+                dir('frontend-demo') {
+
+                    withSonarQubeEnv('SonarQube') {
+
+                        sh 'sonar-scanner'
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        stage('Quality Gate') {
+
+            steps {
+
+                timeout(time: 5, unit: 'MINUTES') {
+
+                    waitForQualityGate abortPipeline: true
+
+                }
+
+            }
+
+        }
+
+
+        stage('Docker Build') {
+
+            steps {
+
+                dir('frontend-demo') {
+
+                    sh 'docker build -t $IMAGE_NAME .'
+
+                }
+
+            }
+
+        }
+
+
+        stage('ECR Operations') {
+
+            steps {
+
                 sh '''
+
                 aws ecr get-login-password --region $AWS_REGION | \
-                docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+                docker login --username AWS \
+                --password-stdin \
+                $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+
+                docker tag $IMAGE_NAME:latest \
+                $REPOSITORY:latest
+
+
+                docker push $REPOSITORY:latest
+
+
+                docker pull $REPOSITORY:latest
+
                 '''
+
             }
+
         }
 
-        stage('Tag Image') {
-            steps {
-                sh 'docker tag $IMAGE_NAME:latest $REPOSITORY:latest'
-            }
-        }
 
-        stage('Push Image to ECR') {
-            steps {
-                sh 'docker push $REPOSITORY:latest'
-            }
-        }
+        stage('Docker Deployment') {
 
-        stage('Pull Image from ECR') {
             steps {
-                sh 'docker pull $REPOSITORY:latest'
-            }
-        }
 
-        stage('Deploy') {
-            steps {
                 sh '''
+
                 docker stop frontend || true
+
                 docker rm frontend || true
+
 
                 docker run -d \
                 --name frontend \
                 -p 8081:80 \
                 $REPOSITORY:latest
+
                 '''
+
             }
+
         }
+
     }
+
 }
