@@ -69,7 +69,7 @@ pipeline {
 
                             sh '''
 
-                           sonar-scanner \
+                            /opt/sonar-scanner/bin/sonar-scanner \
                            -Dsonar.host.url=http://32.198.38.45:9000 \
                            -Dsonar.token=squ_a5bf82426790c2d5364c51210fb45dcbb83a5d43
 
